@@ -1,40 +1,21 @@
 import * as THREE from 'three';
-import gsap from 'gsap';
-import Lenis from 'lenis';
+import { Sky } from 'three/examples/jsm/objects/Sky.js';
 
 /* ==========================================================================
-   1. State & Device Tuning (Optimized for Redmi Note 10/11 - Adreno 610)
+   LUSION-CALIBER MOUNTAIN HAVEN ENGINE
+   - Physically based Atmospheric Sky (Rayleigh & Mie Scattering)
+   - Multi-Octave Fractal Ridge Mountain Terrain with Slope-Adaptive Shading
+   - Solitary Timber Cabin with Volumetric Window Glow & Smoke Drift
+   - Fluid Inertial Camera Drone Navigation (Touch & Pointer Damping)
    ========================================================================== */
+
 const canvas = document.getElementById('webgl-canvas');
 const loader = document.getElementById('loader');
-const timeSlider = document.getElementById('timeSlider');
 
-const state = {
-  timeProgress: 0.25, // 0 to 1 (0: Midnight, 0.25: Dawn, 0.5: Noon, 0.75: Sunset)
-  isRealTime: true,
-  audioPlaying: false,
-  cameraTarget: new THREE.Vector3(0, 2, 0),
-  activeModal: null
-};
-
-// Check actual local clock
-function getRealTimeProgress() {
-  const now = new Date();
-  const hours = now.getHours();
-  const minutes = now.getMinutes();
-  return (hours + minutes / 60) / 24;
-}
-state.timeProgress = getRealTimeProgress();
-timeSlider.value = state.timeProgress;
-
-/* ==========================================================================
-   2. Three.js Scene, Camera & Renderer
-   ========================================================================== */
+// Scene, Camera & Renderer
 const scene = new THREE.Scene();
-scene.fog = new THREE.FogExp2(0x0a1014, 0.015);
-
-const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 800);
-camera.position.set(0, 18, 45);
+const camera = new THREE.PerspectiveCamera(46, window.innerWidth / window.innerHeight, 0.5, 2000);
+camera.position.set(0, 24, 75);
 
 const renderer = new THREE.WebGLRenderer({
   canvas,
@@ -42,7 +23,7 @@ const renderer = new THREE.WebGLRenderer({
   powerPreference: 'high-performance'
 });
 
-// Mobile optimization: Cap pixelRatio at 1.75 to prevent mobile GPU thermal throttling
+// Mobile optimization for Redmi Note (Adreno 610)
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.75));
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
@@ -51,237 +32,262 @@ renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
 /* ==========================================================================
-   3. Dynamic Sky, Sun, Moon & Stars
+   1. Physically Based Atmospheric Sky Shader (Rayleigh & Mie Scattering)
    ========================================================================== */
-// Sky Dome
-const skyGeo = new THREE.SphereGeometry(300, 32, 16);
-const skyMat = new THREE.MeshBasicMaterial({
-  side: THREE.BackSide,
-  color: 0x16252d
-});
-const skyDome = new THREE.Mesh(skyGeo, skyMat);
-scene.add(skyDome);
+const sky = new Sky();
+sky.scale.setScalar(450000);
+scene.add(sky);
 
-// Starfield
-const starCount = 900;
-const starGeo = new THREE.BufferGeometry();
-const starPos = new Float32Array(starCount * 3);
-for (let i = 0; i < starCount * 3; i += 3) {
-  const theta = Math.random() * Math.PI * 2;
-  const phi = Math.acos(Math.random() * 2 - 1);
-  const r = 280;
-  starPos[i] = r * Math.sin(phi) * Math.cos(theta);
-  starPos[i + 1] = Math.abs(r * Math.cos(phi)) + 15; // Upper hemisphere
-  starPos[i + 2] = r * Math.sin(phi) * Math.sin(theta);
-}
-starGeo.setAttribute('position', new THREE.BufferAttribute(starPos, 3));
-const starMat = new THREE.PointsMaterial({
-  color: 0xffffff,
-  size: 1.8,
-  transparent: true,
-  opacity: 0.8
-});
-const starField = new THREE.Points(starGeo, starMat);
-scene.add(starField);
+const skyUniforms = sky.material.uniforms;
+skyUniforms['turbidity'].value = 8.5;
+skyUniforms['rayleigh'].value = 2.8;
+skyUniforms['mieCoefficient'].value = 0.005;
+skyUniforms['mieDirectionalG'].value = 0.82;
 
-// Sun Mesh & Light
-const sunLight = new THREE.DirectionalLight(0xfffaed, 1.4);
+const sun = new THREE.Vector3();
+const moon = new THREE.Vector3();
+
+// Directional Sun & Moon Lights
+const sunLight = new THREE.DirectionalLight(0xfffaec, 1.6);
 sunLight.castShadow = true;
 sunLight.shadow.mapSize.width = 1024;
 sunLight.shadow.mapSize.height = 1024;
 sunLight.shadow.camera.near = 10;
-sunLight.shadow.camera.far = 160;
-sunLight.shadow.camera.left = -30;
-sunLight.shadow.camera.right = 30;
-sunLight.shadow.camera.top = 30;
-sunLight.shadow.camera.bottom = -30;
+sunLight.shadow.camera.far = 250;
+sunLight.shadow.camera.left = -40;
+sunLight.shadow.camera.right = 40;
+sunLight.shadow.camera.top = 40;
+sunLight.shadow.camera.bottom = -40;
+sunLight.shadow.bias = -0.0005;
 scene.add(sunLight);
 
-const sunMesh = new THREE.Mesh(
-  new THREE.SphereGeometry(7, 16, 16),
-  new THREE.MeshBasicMaterial({ color: 0xffe899 })
-);
-scene.add(sunMesh);
-
-// Moon Mesh & Light
-const moonLight = new THREE.DirectionalLight(0x7ea8d9, 0.35);
-moonLight.castShadow = false;
+const moonLight = new THREE.DirectionalLight(0x769bc9, 0.4);
 scene.add(moonLight);
 
-const moonMesh = new THREE.Mesh(
-  new THREE.SphereGeometry(5, 16, 16),
-  new THREE.MeshBasicMaterial({ color: 0xeef5fc })
-);
-scene.add(moonMesh);
-
-// Ambient Light
-const hemiLight = new THREE.HemisphereLight(0xfff0dd, 0x1f2e27, 0.7);
+const hemiLight = new THREE.HemisphereLight(0xffeedd, 0x1a2e22, 0.65);
 scene.add(hemiLight);
 
-// Window Glow PointLight inside Cottage
-const houseLight = new THREE.PointLight(0xffaa44, 0, 20);
-houseLight.position.set(0, 3, 0);
-scene.add(houseLight);
+// Exponential Atmospheric Fog
+scene.fog = new THREE.FogExp2(0x9cb8cc, 0.008);
 
 /* ==========================================================================
-   4. Procedural Mountain Terrain
+   2. Multi-Octave Fractal Terrain (fBm) with Slope-Adaptive Shading
    ========================================================================== */
-const mountainGeo = new THREE.PlaneGeometry(160, 160, 48, 48);
-mountainGeo.rotateX(-Math.PI / 2);
+const terrainWidth = 260;
+const terrainDepth = 260;
+const segments = 128; // Balanced for 60FPS on mobile Adreno 610
 
-const posAttr = mountainGeo.attributes.position;
+const terrainGeo = new THREE.PlaneGeometry(terrainWidth, terrainDepth, segments, segments);
+terrainGeo.rotateX(-Math.PI / 2);
+
+// Multi-octave ridge noise function
+function ridgeNoise(x, z) {
+  let elevation = 0;
+  // Low-frequency mountain mass
+  elevation += Math.sin(x * 0.025) * Math.cos(z * 0.025) * 22;
+  // Mid-frequency sharp ridge carving
+  elevation += (1.0 - Math.abs(Math.sin(x * 0.065 + z * 0.045))) * 12;
+  // Micro rock harmonics
+  elevation += Math.sin(x * 0.14) * Math.cos(z * 0.12) * 3.5;
+  return elevation;
+}
+
+const posAttr = terrainGeo.attributes.position;
 for (let i = 0; i < posAttr.count; i++) {
   const x = posAttr.getX(i);
   const z = posAttr.getZ(i);
-  const distFromCenter = Math.sqrt(x * x + z * z);
+  const dist = Math.sqrt(x * x + z * z);
 
-  // Flat clearing for the cozy cottage near center
-  if (distFromCenter < 14) {
-    posAttr.setY(i, Math.sin(x * 0.2) * 0.4);
+  if (dist < 18) {
+    // Smooth valley plateau for the cabin
+    posAttr.setY(i, Math.sin(x * 0.1) * 0.4);
   } else {
-    // Majestic mountain ridges
-    const baseElevation = Math.sin(x * 0.06) * Math.cos(z * 0.06) * 12;
-    const ridgeNoise = Math.sin(x * 0.15 + z * 0.1) * 4.5;
-    const rimClimb = Math.pow(distFromCenter / 45, 1.9) * 5;
-    posAttr.setY(i, Math.max(-1, baseElevation + ridgeNoise + rimClimb));
+    const rawElev = ridgeNoise(x, z);
+    // Ridge bowl envelope
+    const bowl = Math.pow(dist / 65, 2.2) * 7.5;
+    posAttr.setY(i, Math.max(-2, rawElev + bowl));
   }
 }
-mountainGeo.computeVertexNormals();
+terrainGeo.computeVertexNormals();
 
-const mountainMat = new THREE.MeshStandardMaterial({
-  color: 0x304938,
+// Slope-Adaptive Vertex Coloring
+// Flat surfaces = lush alpine moss & grass; Steep cliff faces = dark granite rock
+const colors = new Float32Array(posAttr.count * 3);
+const normals = terrainGeo.attributes.normal;
+
+const grassColor = new THREE.Color(0x223d2b); // Alpine forest grass
+const rockColor = new THREE.Color(0x2d2b28);  // Granite cliff
+const highPeakColor = new THREE.Color(0x3e3c38); // Alpine ridge peak
+
+for (let i = 0; i < posAttr.count; i++) {
+  const ny = normals.getY(i);
+  const y = posAttr.getY(i);
+
+  let vertexColor = new THREE.Color();
+
+  if (ny > 0.82) {
+    // Flat ground / valley
+    vertexColor.copy(grassColor);
+    // Subtle variation
+    vertexColor.offsetHSL((Math.random() - 0.5) * 0.03, 0, (Math.random() - 0.5) * 0.04);
+  } else if (ny > 0.6) {
+    // Intermediate slope
+    const factor = (ny - 0.6) / 0.22;
+    vertexColor.lerpColors(rockColor, grassColor, factor);
+  } else {
+    // Steep rock cliff
+    vertexColor.copy(rockColor);
+    if (y > 18) {
+      vertexColor.lerp(highPeakColor, 0.5);
+    }
+  }
+
+  colors[i * 3] = vertexColor.r;
+  colors[i * 3 + 1] = vertexColor.g;
+  colors[i * 3 + 2] = vertexColor.b;
+}
+
+terrainGeo.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+
+const terrainMat = new THREE.MeshStandardMaterial({
+  vertexColors: true,
   roughness: 0.85,
-  metalness: 0.1,
+  metalness: 0.12,
   flatShading: true
 });
-const mountainMesh = new THREE.Mesh(mountainGeo, mountainMat);
-mountainMesh.receiveShadow = true;
-scene.add(mountainMesh);
+
+const terrainMesh = new THREE.Mesh(terrainGeo, terrainMat);
+terrainMesh.receiveShadow = true;
+scene.add(terrainMesh);
 
 /* ==========================================================================
-   5. The Solitary Mountain Cottage
+   3. The Solitary Timber Cabin / Mountain House
    ========================================================================== */
-const cottageGroup = new THREE.Group();
+const cabinGroup = new THREE.Group();
 
-// Wooden Base Walls
-const wallMat = new THREE.MeshStandardMaterial({ color: 0x4f3627, roughness: 0.9 });
-const walls = new THREE.Mesh(new THREE.BoxGeometry(8, 4.5, 6), wallMat);
-walls.position.y = 2.25;
-walls.castShadow = true;
-walls.receiveShadow = true;
-cottageGroup.add(walls);
+// Dark Weathered Cedar Walls
+const woodMat = new THREE.MeshStandardMaterial({ color: 0x3d2b1f, roughness: 0.85 });
+const cabinWalls = new THREE.Mesh(new THREE.BoxGeometry(9.2, 5.2, 6.8), woodMat);
+cabinWalls.position.y = 2.6;
+cabinWalls.castShadow = true;
+cabinWalls.receiveShadow = true;
+cabinGroup.add(cabinWalls);
 
-// Gable Roof
-const roofMat = new THREE.MeshStandardMaterial({ color: 0x2d221b, roughness: 0.8 });
-const roofGeo = new THREE.ConeGeometry(6.2, 3.2, 4);
+// Pitched Alpine Roof with Overhanging Eaves
+const slateMat = new THREE.MeshStandardMaterial({ color: 0x1d1815, roughness: 0.65 });
+const roofGeo = new THREE.ConeGeometry(7.6, 3.8, 4);
 roofGeo.rotateY(Math.PI / 4);
-const roof = new THREE.Mesh(roofGeo, roofMat);
-roof.position.y = 5.8;
-roof.scale.set(1.1, 1, 1.25);
+const roof = new THREE.Mesh(roofGeo, slateMat);
+roof.position.y = 6.6;
+roof.scale.set(1.08, 1, 1.28);
 roof.castShadow = true;
-cottageGroup.add(roof);
+cabinGroup.add(roof);
 
-// Stone Chimney
-const chimneyMat = new THREE.MeshStandardMaterial({ color: 0x3a3835, roughness: 0.95 });
-const chimney = new THREE.Mesh(new THREE.BoxGeometry(1.1, 4.2, 1.1), chimneyMat);
-chimney.position.set(2.4, 5.2, -1.2);
+// Stone Chimney with Rising Smoke
+const chimney = new THREE.Mesh(
+  new THREE.BoxGeometry(1.2, 5.0, 1.2),
+  new THREE.MeshStandardMaterial({ color: 0x2e2c29, roughness: 0.95 })
+);
+chimney.position.set(2.8, 6.0, -1.6);
 chimney.castShadow = true;
-cottageGroup.add(chimney);
+cabinGroup.add(chimney);
 
-// Glowing Windows (Emissive)
+// Glowing Warm Amber Windows (Emissive Material)
 const windowMat = new THREE.MeshStandardMaterial({
-  color: 0x221a12,
-  emissive: 0xffaa44,
-  emissiveIntensity: 0.2,
-  roughness: 0.3
+  color: 0x221810,
+  emissive: 0xffa844,
+  emissiveIntensity: 0.8,
+  roughness: 0.2
 });
-const frontWindow = new THREE.Mesh(new THREE.PlaneGeometry(1.6, 1.6), windowMat);
-frontWindow.position.set(1.8, 2.4, 3.02);
-cottageGroup.add(frontWindow);
 
-const frontWindow2 = new THREE.Mesh(new THREE.PlaneGeometry(1.6, 1.6), windowMat);
-frontWindow2.position.set(-1.8, 2.4, 3.02);
-cottageGroup.add(frontWindow2);
+const win1 = new THREE.Mesh(new THREE.PlaneGeometry(2.0, 2.0), windowMat);
+win1.position.set(-2.0, 2.7, 3.42);
+const win2 = new THREE.Mesh(new THREE.PlaneGeometry(2.0, 2.0), windowMat);
+win2.position.set(2.0, 2.7, 3.42);
+cabinGroup.add(win1, win2);
 
-// Wooden Front Porch / Veranda
-const porchMat = new THREE.MeshStandardMaterial({ color: 0x5a4130, roughness: 0.85 });
-const porch = new THREE.Mesh(new THREE.BoxGeometry(8.5, 0.4, 3.5), porchMat);
-porch.position.set(0, 0.2, 4.5);
+// Interior Point Light (Spills warm amber light outside)
+const cabinLight = new THREE.PointLight(0xffa844, 1.2, 28);
+cabinLight.position.set(0, 3.2, 1.5);
+cabinGroup.add(cabinLight);
+
+// Front Porch Deck
+const porchMat = new THREE.MeshStandardMaterial({ color: 0x483224, roughness: 0.85 });
+const porch = new THREE.Mesh(new THREE.BoxGeometry(10.0, 0.45, 4.4), porchMat);
+porch.position.set(0, 0.22, 5.2);
 porch.receiveShadow = true;
-cottageGroup.add(porch);
+cabinGroup.add(porch);
 
-// Porch Posts
-const postGeo = new THREE.CylinderGeometry(0.12, 0.12, 3.2, 8);
-const post1 = new THREE.Mesh(postGeo, porchMat);
-post1.position.set(-3.8, 1.8, 6.0);
-const post2 = new THREE.Mesh(postGeo, porchMat);
-post2.position.set(3.8, 1.8, 6.0);
-cottageGroup.add(post1, post2);
+// Porch Table
+const table = new THREE.Mesh(
+  new THREE.CylinderGeometry(1.1, 1.1, 1.3, 16),
+  new THREE.MeshStandardMaterial({ color: 0x302117, roughness: 0.9 })
+);
+table.position.set(0, 0.95, 5.4);
+cabinGroup.add(table);
 
-// Veranda Table
-const tableMat = new THREE.MeshStandardMaterial({ color: 0x3d2719, roughness: 0.9 });
-const table = new THREE.Mesh(new THREE.CylinderGeometry(1.0, 1.0, 1.2, 12), tableMat);
-table.position.set(0, 0.8, 4.8);
-cottageGroup.add(table);
+// Steaming Clay Cup of Hot Dudh Cha ☕
+const cup = new THREE.Mesh(
+  new THREE.CylinderGeometry(0.26, 0.18, 0.5, 20),
+  new THREE.MeshStandardMaterial({ color: 0x9e5335, roughness: 0.95 })
+);
+cup.position.set(0, 1.8, 5.4);
+cabinGroup.add(cup);
 
-// Clay Matka Cup of Dudh Cha ☕
-const cupMat = new THREE.MeshStandardMaterial({ color: 0xa45b38, roughness: 0.95 });
-const matkaCup = new THREE.Mesh(new THREE.CylinderGeometry(0.24, 0.16, 0.45, 16), cupMat);
-matkaCup.position.set(0, 1.55, 4.8);
-cottageGroup.add(matkaCup);
+const liquid = new THREE.Mesh(
+  new THREE.CircleGeometry(0.24, 20),
+  new THREE.MeshBasicMaterial({ color: 0xd8a16c })
+);
+liquid.rotateX(-Math.PI / 2);
+liquid.position.set(0, 2.03, 5.4);
+cabinGroup.add(liquid);
 
-// Steaming Liquid Surface
-const chaLiquidMat = new THREE.MeshBasicMaterial({ color: 0xd6a16b });
-const chaLiquid = new THREE.Mesh(new THREE.CircleGeometry(0.22, 16), chaLiquidMat);
-chaLiquid.rotateX(-Math.PI / 2);
-chaLiquid.position.set(0, 1.76, 4.8);
-cottageGroup.add(chaLiquid);
-
-cottageGroup.position.set(0, 0, 0);
-scene.add(cottageGroup);
+cabinGroup.position.set(0, 0, 0);
+scene.add(cabinGroup);
 
 /* ==========================================================================
-   6. Particle Systems: Chimney Smoke & Dudh Cha Steam
+   4. Atmospheric Smoke & Steam Particles
    ========================================================================== */
-// Chimney Smoke
-const smokeCount = 36;
+// Chimney Smoke Particles
+const smokeCount = 40;
 const smokeGeo = new THREE.BufferGeometry();
-const smokePositions = new Float32Array(smokeCount * 3);
+const smokePos = new Float32Array(smokeCount * 3);
 const smokeData = [];
 
 for (let i = 0; i < smokeCount; i++) {
-  smokePositions[i * 3] = 2.4 + (Math.random() - 0.5) * 0.4;
-  smokePositions[i * 3 + 1] = 7.4 + Math.random() * 4.0;
-  smokePositions[i * 3 + 2] = -1.2 + (Math.random() - 0.5) * 0.4;
+  smokePos[i * 3] = 2.8 + (Math.random() - 0.5) * 0.4;
+  smokePos[i * 3 + 1] = 8.5 + Math.random() * 4.5;
+  smokePos[i * 3 + 2] = -1.6 + (Math.random() - 0.5) * 0.4;
   smokeData.push({
-    baseY: 7.4,
-    speedY: 0.03 + Math.random() * 0.02,
-    driftX: (Math.random() - 0.5) * 0.015,
+    baseY: 8.5,
+    speedY: 0.025 + Math.random() * 0.02,
+    driftX: 0.015 + (Math.random() - 0.5) * 0.01,
     driftZ: (Math.random() - 0.5) * 0.015
   });
 }
-smokeGeo.setAttribute('position', new THREE.BufferAttribute(smokePositions, 3));
+smokeGeo.setAttribute('position', new THREE.BufferAttribute(smokePos, 3));
 const smokeMat = new THREE.PointsMaterial({
-  color: 0xcccccc,
-  size: 1.2,
+  color: 0xdddddd,
+  size: 1.4,
   transparent: true,
-  opacity: 0.35
+  opacity: 0.3
 });
-const smokeParticles = new THREE.Points(smokeGeo, smokeMat);
-scene.add(smokeParticles);
+const smoke = new THREE.Points(smokeGeo, smokeMat);
+scene.add(smoke);
 
-// Steam Particles from the Clay Cup
+// Dudh Cha Steam Particles
 const steamCount = 18;
 const steamGeo = new THREE.BufferGeometry();
 const steamPos = new Float32Array(steamCount * 3);
 const steamData = [];
+
 for (let i = 0; i < steamCount; i++) {
   steamPos[i * 3] = (Math.random() - 0.5) * 0.2;
-  steamPos[i * 3 + 1] = 1.8 + Math.random() * 1.5;
-  steamPos[i * 3 + 2] = 4.8 + (Math.random() - 0.5) * 0.2;
+  steamPos[i * 3 + 1] = 2.0 + Math.random() * 1.5;
+  steamPos[i * 3 + 2] = 5.4 + (Math.random() - 0.5) * 0.2;
   steamData.push({
-    baseY: 1.8,
-    speedY: 0.015 + Math.random() * 0.012
+    baseY: 2.0,
+    speedY: 0.018 + Math.random() * 0.012
   });
 }
 steamGeo.setAttribute('position', new THREE.BufferAttribute(steamPos, 3));
@@ -289,383 +295,190 @@ const steamMat = new THREE.PointsMaterial({
   color: 0xffffff,
   size: 0.45,
   transparent: true,
-  opacity: 0.3
+  opacity: 0.35
 });
-const steamParticles = new THREE.Points(steamGeo, steamMat);
-scene.add(steamParticles);
+const steam = new THREE.Points(steamGeo, steamMat);
+scene.add(steam);
 
 /* ==========================================================================
-   7. Instanced Pine Trees & Garden Flowers (Roses 🌹 & Sunflowers 🌻)
+   5. Alpine Pine Trees & Garden Flowers (Instanced)
    ========================================================================== */
-// Instanced Pine Trees
-const treeConeGeo = new THREE.ConeGeometry(1.6, 5, 5);
-const treeMat = new THREE.MeshStandardMaterial({ color: 0x1f3b2b, roughness: 0.9, flatShading: true });
-const treeCount = 75;
-const treeInstanced = new THREE.InstancedMesh(treeConeGeo, treeMat, treeCount);
+// Pine Trees
+const treeCount = 95;
+const treeGeo = new THREE.ConeGeometry(1.8, 5.6, 6);
+const treeMat = new THREE.MeshStandardMaterial({
+  color: 0x162c20,
+  roughness: 0.9,
+  flatShading: true
+});
+const treeInstanced = new THREE.InstancedMesh(treeGeo, treeMat, treeCount);
 treeInstanced.castShadow = true;
 
 const dummy = new THREE.Object3D();
-let placedTrees = 0;
-while (placedTrees < treeCount) {
+for (let i = 0; i < treeCount; i++) {
   const angle = Math.random() * Math.PI * 2;
-  const radius = 15 + Math.random() * 55;
-  const x = Math.cos(angle) * radius;
-  const z = Math.sin(angle) * radius;
-  
-  // Approximate mountain height
+  const rad = 17 + Math.random() * 75;
+  const x = Math.cos(angle) * rad;
+  const z = Math.sin(angle) * rad;
   const dist = Math.sqrt(x * x + z * z);
-  const y = Math.pow(dist / 45, 1.9) * 4.5 + Math.sin(x * 0.1) * 2.5;
+  const y = Math.pow(dist / 65, 2.2) * 7.5 + ridgeNoise(x, z);
 
-  dummy.position.set(x, y + 2.5, z);
-  const s = 0.7 + Math.random() * 0.8;
+  dummy.position.set(x, y + 2.7, z);
+  const s = 0.7 + Math.random() * 0.75;
   dummy.scale.set(s, s * (0.9 + Math.random() * 0.4), s);
   dummy.rotation.y = Math.random() * Math.PI * 2;
   dummy.updateMatrix();
-  treeInstanced.setMatrixAt(placedTrees, dummy.matrix);
-  placedTrees++;
+  treeInstanced.setMatrixAt(i, dummy.matrix);
 }
 treeInstanced.instanceMatrix.needsUpdate = true;
 scene.add(treeInstanced);
 
-// Instanced Sunflowers 🌻 in front of the cottage
-const sunflowerCount = 28;
-const flowerHeadGeo = new THREE.CylinderGeometry(0.35, 0.35, 0.08, 8);
-const flowerStemGeo = new THREE.CylinderGeometry(0.04, 0.04, 1.2, 5);
-const sunflowerMat = new THREE.MeshStandardMaterial({ color: 0xf5b325, roughness: 0.5 });
-const stemMat = new THREE.MeshStandardMaterial({ color: 0x3d6635, roughness: 0.9 });
+// Front Yard Sunflowers 🌻
+const sfCount = 30;
+const sfGeo = new THREE.CylinderGeometry(0.36, 0.36, 0.08, 10);
+const sfMat = new THREE.MeshStandardMaterial({ color: 0xf5b525, roughness: 0.4 });
+const sfMesh = new THREE.InstancedMesh(sfGeo, sfMat, sfCount);
 
-const sunflowerInstanced = new THREE.InstancedMesh(flowerHeadGeo, sunflowerMat, sunflowerCount);
-for (let i = 0; i < sunflowerCount; i++) {
-  const x = (Math.random() - 0.5) * 12 + (i % 2 === 0 ? 5.5 : -5.5);
-  const z = 6.5 + Math.random() * 5.0;
-  dummy.position.set(x, 1.2, z);
+for (let i = 0; i < sfCount; i++) {
+  const x = (Math.random() - 0.5) * 12 + (i % 2 === 0 ? 6.2 : -6.2);
+  const z = 7.2 + Math.random() * 5.0;
+  dummy.position.set(x, 1.3, z);
   dummy.rotation.x = Math.PI / 4 + (Math.random() - 0.5) * 0.2;
-  dummy.rotation.y = (Math.random() - 0.5) * 0.5;
+  dummy.rotation.y = (Math.random() - 0.5) * 0.4;
   const s = 0.8 + Math.random() * 0.5;
   dummy.scale.set(s, s, s);
   dummy.updateMatrix();
-  sunflowerInstanced.setMatrixAt(i, dummy.matrix);
+  sfMesh.setMatrixAt(i, dummy.matrix);
 }
-sunflowerInstanced.instanceMatrix.needsUpdate = true;
-scene.add(sunflowerInstanced);
+sfMesh.instanceMatrix.needsUpdate = true;
+scene.add(sfMesh);
 
-// Instanced Wild Roses 🌹
-const roseCount = 24;
-const roseGeo = new THREE.SphereGeometry(0.26, 6, 6);
-const roseMat = new THREE.MeshStandardMaterial({ color: 0xd9434e, roughness: 0.6 });
-const roseInstanced = new THREE.InstancedMesh(roseGeo, roseMat, roseCount);
+// Front Yard Wild Roses 🌹
+const roseCount = 26;
+const roseGeo = new THREE.SphereGeometry(0.28, 8, 8);
+const roseMat = new THREE.MeshStandardMaterial({ color: 0xd43f4a, roughness: 0.5 });
+const roseMesh = new THREE.InstancedMesh(roseGeo, roseMat, roseCount);
 
 for (let i = 0; i < roseCount; i++) {
-  const x = (Math.random() - 0.5) * 8 + (i % 2 === 0 ? 4.2 : -4.2);
-  const z = 5.2 + Math.random() * 3.5;
-  dummy.position.set(x, 0.65, z);
+  const x = (Math.random() - 0.5) * 9 + (i % 2 === 0 ? 4.8 : -4.8);
+  const z = 6.0 + Math.random() * 3.5;
+  dummy.position.set(x, 0.7, z);
   const s = 0.8 + Math.random() * 0.5;
   dummy.scale.set(s, s, s);
   dummy.updateMatrix();
-  roseInstanced.setMatrixAt(i, dummy.matrix);
+  roseMesh.setMatrixAt(i, dummy.matrix);
 }
-roseInstanced.instanceMatrix.needsUpdate = true;
-scene.add(roseInstanced);
+roseMesh.instanceMatrix.needsUpdate = true;
+scene.add(roseMesh);
 
 /* ==========================================================================
-   8. Atmospheric Lighting & Day/Night Cycle Logic
+   6. Real-Time Sun & Sky Solar Cycle
    ========================================================================== */
-function updateDayNightCycle(t) {
-  // t: 0.0 (midnight) -> 0.25 (dawn) -> 0.5 (noon) -> 0.75 (sunset) -> 1.0 (midnight)
-  const angle = (t - 0.25) * Math.PI * 2;
-  const r = 160;
-
-  // Orbiting Sun & Moon
-  const sunX = Math.cos(angle) * r;
-  const sunY = Math.sin(angle) * r;
-  sunMesh.position.set(sunX, Math.max(sunY, -30), -50);
-  sunLight.position.copy(sunMesh.position);
-
-  const moonX = Math.cos(angle + Math.PI) * r;
-  const moonY = Math.sin(angle + Math.PI) * r;
-  moonMesh.position.set(moonX, Math.max(moonY, -30), 50);
-  moonLight.position.copy(moonMesh.position);
-
-  // Palette interpolation
-  let skyColor, fogColor, hemiSky, hemiGround, sunIntensity, windowGlow;
-
-  if (t >= 0.2 && t < 0.35) {
-    // DAWN / MORNING
-    const factor = (t - 0.2) / 0.15;
-    skyColor = new THREE.Color().lerpColors(new THREE.Color(0x1a2128), new THREE.Color(0xffbf80), factor);
-    fogColor = new THREE.Color().lerpColors(new THREE.Color(0x131a20), new THREE.Color(0xedd3b9), factor);
-    hemiSky = new THREE.Color(0xffdcb3);
-    hemiGround = new THREE.Color(0x354b3c);
-    sunIntensity = factor * 1.3;
-    windowGlow = (1 - factor) * 2.0;
-    starMat.opacity = Math.max(0, 1 - factor * 1.5);
-  } else if (t >= 0.35 && t < 0.68) {
-    // BRIGHT DAY
-    skyColor = new THREE.Color(0x76b4d6);
-    fogColor = new THREE.Color(0xc1e3f2);
-    hemiSky = new THREE.Color(0xfff6e8);
-    hemiGround = new THREE.Color(0x304938);
-    sunIntensity = 1.5;
-    windowGlow = 0.05;
-    starMat.opacity = 0;
-  } else if (t >= 0.68 && t < 0.82) {
-    // SUNSET / GOLDEN HOUR
-    const factor = (t - 0.68) / 0.14;
-    skyColor = new THREE.Color().lerpColors(new THREE.Color(0x76b4d6), new THREE.Color(0xd95b36), factor);
-    fogColor = new THREE.Color().lerpColors(new THREE.Color(0xc1e3f2), new THREE.Color(0x6e382d), factor);
-    hemiSky = new THREE.Color(0xffaa66);
-    hemiGround = new THREE.Color(0x2d2e24);
-    sunIntensity = (1 - factor) * 1.2;
-    windowGlow = factor * 2.8;
-    starMat.opacity = factor * 0.8;
-  } else {
-    // STARRY NIGHT
-    skyColor = new THREE.Color(0x0a1016);
-    fogColor = new THREE.Color(0x0c141a);
-    hemiSky = new THREE.Color(0x3a5369);
-    hemiGround = new THREE.Color(0x0f1c16);
-    sunIntensity = 0;
-    windowGlow = 3.2;
-    starMat.opacity = 0.9;
-  }
-
-  skyMat.color.copy(skyColor);
-  scene.fog.color.copy(fogColor);
-  hemiLight.color.copy(hemiSky);
-  hemiLight.groundColor.copy(hemiGround);
-  sunLight.intensity = sunIntensity;
-  windowMat.emissiveIntensity = windowGlow;
-  houseLight.intensity = windowGlow * 1.5;
-}
-
-/* ==========================================================================
-   9. Lenis Smooth Scroll & Camera Choreography
-   ========================================================================== */
-const lenis = new Lenis({
-  duration: 1.6,
-  easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-  smoothWheel: true,
-  touchMultiplier: 1.8
-});
-
-function raf(time) {
-  lenis.raf(time);
-  requestAnimationFrame(raf);
-}
-requestAnimationFrame(raf);
-
-// Camera Waypoints corresponding to the 6 Story Acts
-const waypoints = [
-  // Act 1: High Vista (Dawn Overview)
-  { pos: new THREE.Vector3(0, 22, 48), target: new THREE.Vector3(0, 3, 0) },
-  // Act 2: Flowers Garden (Roses & Sunflowers front yard)
-  { pos: new THREE.Vector3(5.5, 4.2, 13.5), target: new THREE.Vector3(0, 1.8, 6.0) },
-  // Act 3: Veranda Table & Steaming Dudh Cha
-  { pos: new THREE.Vector3(0.0, 2.3, 6.8), target: new THREE.Vector3(0, 1.6, 4.8) },
-  // Act 4: Sunset / Night transition & Cottage Windows
-  { pos: new THREE.Vector3(-8.5, 5.0, 10.5), target: new THREE.Vector3(0, 3.2, 0) },
-  // Act 5: Halal Promise & Family Honor
-  { pos: new THREE.Vector3(0, 7.5, 22.0), target: new THREE.Vector3(0, 3.0, 0) },
-  // Act 6: Keepsake Vault
-  { pos: new THREE.Vector3(0, 14.0, 36.0), target: new THREE.Vector3(0, 2.5, 0) }
-];
-
-lenis.on('scroll', (e) => {
-  const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-  const progress = Math.max(0, Math.min(1, e.scroll / (maxScroll || 1)));
-
-  // Calculate waypoint interpolation
-  const totalSegments = waypoints.length - 1;
-  const currentSegment = Math.min(totalSegments - 1, Math.floor(progress * totalSegments));
-  const segmentT = (progress * totalSegments) - currentSegment;
-
-  const p1 = waypoints[currentSegment].pos;
-  const p2 = waypoints[currentSegment + 1].pos;
-  const t1 = waypoints[currentSegment].target;
-  const t2 = waypoints[currentSegment + 1].target;
-
-  camera.position.lerpVectors(p1, p2, segmentT);
-  state.cameraTarget.lerpVectors(t1, t2, segmentT);
-  camera.lookAt(state.cameraTarget);
-
-  // If user scrolls and isn't locked on slider, scroll also smoothly advances time
-  if (state.isRealTime) {
-    // Day to night journey as she scrolls down
-    const scrollTime = 0.22 + progress * 0.72; // Dawn to Starry Night
-    updateDayNightCycle(scrollTime % 1);
-    timeSlider.value = scrollTime % 1;
-  }
-});
-
-/* ==========================================================================
-   10. Manual Time Slider Interaction
-   ========================================================================== */
-timeSlider.addEventListener('input', (e) => {
-  state.isRealTime = false;
-  state.timeProgress = parseFloat(e.target.value);
-  updateDayNightCycle(state.timeProgress);
-});
-
-/* ==========================================================================
-   11. Ambient Audio Synthesizer (Web Audio API - No external downloads)
-   ========================================================================== */
-let audioCtx = null;
-let audioTimer = null;
-
-const peacefulChords = [
-  [261.63, 329.63, 392.00, 523.25], // C Major
-  [220.00, 261.63, 329.63, 440.00], // A Minor
-  [174.61, 220.00, 261.63, 349.23], // F Major
-  [196.00, 246.94, 293.66, 392.00]  // G Major
-];
-let chordIndex = 0;
-
-function playAmbientChord() {
-  if (!audioCtx || !state.audioPlaying) return;
-  const chord = peacefulChords[chordIndex];
-  chordIndex = (chordIndex + 1) % peacefulChords.length;
-
-  chord.forEach((freq, idx) => {
-    setTimeout(() => {
-      if (!state.audioPlaying) return;
-      const osc = audioCtx.createOscillator();
-      const gain = audioCtx.createGain();
-
-      osc.type = 'sine';
-      osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-
-      gain.gain.setValueAtTime(0.001, audioCtx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.035, audioCtx.currentTime + 1.2);
-      gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 4.8);
-
-      osc.connect(gain);
-      gain.connect(audioCtx.destination);
-
-      osc.start();
-      osc.stop(audioCtx.currentTime + 5.0);
-    }, idx * 260);
-  });
-}
-
-window.toggleAudio = function() {
-  if (!audioCtx) {
-    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-  }
-
-  const btn = document.getElementById('audioBtn');
-  const label = document.getElementById('audioLabel');
-
-  if (!state.audioPlaying) {
-    if (audioCtx.state === 'suspended') {
-      audioCtx.resume();
-    }
-    state.audioPlaying = true;
-    btn.classList.add('active');
-    label.innerText = "Playing 🎶";
-    playAmbientChord();
-    audioTimer = setInterval(playAmbientChord, 5200);
-  } else {
-    state.audioPlaying = false;
-    btn.classList.remove('active');
-    label.innerText = "Ambience";
-    clearInterval(audioTimer);
-  }
-};
-
-/* ==========================================================================
-   12. Simple, Heartfelt Modal Letters (English + Bangla)
-   ========================================================================== */
-window.openFlowerDialog = function() {
-  openModal(
-    "গোলাপ ও সূর্যমুখী • Your Favorite Blooms",
-    "Roses & Sunflowers",
-    `A rose is soft and delicate—just like your heart. It feels every rough breeze, and it deserves gentle love, never harsh words.
-(গোলাপ যেমন কোমল, ঠিক তেমনি তোমার মন। তোমার এই নরম হৃদয় কোনো রুক্ষতার জন্য নয়, পরম যত্নে রাখার জন্য।)
-
-And a sunflower always turns toward the light. Even on difficult days, you keep hoping, keep trying, and bring warmth wherever you go.
-(আর সূর্যমুখী যেমন সব সময় আলোর দিকে চেয়ে থাকে, তুমিও হাজারো কষ্টের মাঝে আলো হয়ে থাকো।)`
-  );
-};
-
-window.openChaDialog = function() {
-  openModal(
-    "গরম দুধ চা • A Warm Sip of Peace",
-    "A Hot Cup of Dudh Cha",
-    `Take a slow, deep breath, Tama.
-
-When your thoughts feel loud, remember this moment. Two clay cups of hot dudh cha on our quiet wooden porch, watching the mountain mist roll by. 
-(যখন ভাবনাগুলো খুব এলোমেলো হয়ে যায়, চোখ বন্ধ করে একটু বুক ভরে শ্বাস নাও। শান্ত পাহাড়ের এই বারান্দায় বসে এক কাপ গরম দুধ চা খাওয়ার এই শান্তিটুকু শুধু তোমার জন্য।)`
-  );
-};
-
-window.openLetterDialog = function(type) {
-  if (type === 'family') {
-    openModal(
-      "পরিবারকে সম্মান • Honoring Your Family",
-      "To Abu Bakkar Uncle & Rina Aunty's Daughter",
-      `Tama, your love for your parents is something I truly respect. 
-
-Uncle Abu Bakkar Siddique and Aunty Rina Akter only want you to be safe. Because of wrong information, they are worried—and any loving parent would be. 
-
-You never have to choose between your family and me. We will win their blessings with patience, honesty, and respect. 
-(তোমার বাবা-মায়ের প্রতি তোমার ভালোবাসা আমাকে মুগ্ধ করে। আমরা তাঁদের দোয়া আর সম্মান নিয়েই এক হব, ইনশাআল্লাহ।)`
-    );
-  } else if (type === 'vows') {
-    openModal(
-      "আমার প্রতিশ্রুতি • My Word To You",
-      "What I Am Changing For You",
-      `1. Mastering My Anger: You have tolerated my temper with so much patience. You never deserved sharp words. I am actively learning to pause, stay calm, and protect your gentle heart.
-(আমার রাগ নিয়ন্ত্রণ: তোমার নরম মনকে আঘাত দেওয়ার মতো ভুল আর নয়। আমি শান্ত হতে শিখছি।)
-
-2. Daily Routine: I am fixing my sleep, health, and schedule every day so you can feel proud and secure.
-(নিয়মানুবর্তিতা: আমি আমার জীবন গুছিয়ে নিচ্ছি, যাতে তুমি নিশ্চিন্তে ভরসা করতে পারো।)`
-    );
-  } else if (type === 'marriage') {
-    openModal(
-      "আমাদের স্বপ্ন • The Halal Dream",
-      "Our Future Together",
-      `Our end goal is clear and pure: a blessed, peaceful marriage with our families smiling beside us.
-
-A simple, beautiful life—hot morning dudh cha, quiet laughter, and choosing each other every single day.
-(আমাদের শেষ ঠিকানা একটি সুন্দর, শান্ত সংসার—যেখানে পরিবার থাকবে, সম্মান থাকবে, আর থাকবে অনন্ত শান্তি। শুভ জন্মদিন, তামা 🤍)`
-    );
-  }
-};
-
-window.openVaultDialog = function() {
-  const saved = JSON.parse(localStorage.getItem('tama_private_photos') || '[]');
-  const count = saved.length;
+function updateSunPosition() {
+  const now = new Date();
+  const hours = now.getHours() + now.getMinutes() / 60;
   
-  openModal(
-    "গোপন স্মৃতির ঘর • 100% Private Vault",
-    "Our Keepsake Vault",
-    `Your photos are saved only inside your phone's browser—never uploaded to the internet. 
+  // Calculate realistic sun elevation (-90 to +90 degrees)
+  // Sunrise ~ 06:00, Peak ~ 12:00, Sunset ~ 18:00
+  const solarAngle = (hours - 6) / 12 * Math.PI;
+  const elevation = Math.sin(solarAngle) * 55; // Up to 55 degrees high
+  const azimuth = 180 + Math.cos(solarAngle) * 75; // East to West arc
 
-Currently, you have ${count} private moments saved here. 
+  const phi = THREE.MathUtils.degToRad(90 - elevation);
+  const theta = THREE.MathUtils.degToRad(azimuth);
 
-(এখানে রাখা ছবি কেবল তোমার ফোনেই সংরক্ষিত থাকে, ইন্টারনেটে যায় না। এটি তোমার ও আমার একদম গোপন স্মৃতির আশ্রয়।)`
-  );
-};
+  sun.setFromSphericalCoords(1, phi, theta);
+  skyUniforms['sunPosition'].value.copy(sun);
 
-function openModal(tag, title, body) {
-  document.getElementById('modalTag').innerText = tag;
-  document.getElementById('modalTitle').innerText = title;
-  document.getElementById('modalBody').innerText = body;
-  document.getElementById('modalOverlay').classList.add('active');
-}
+  sunLight.position.copy(sun).multiplyScalar(150);
 
-window.closeModal = function() {
-  document.getElementById('modalOverlay').classList.remove('active');
-};
-
-window.closeModalOnBackdrop = function(e) {
-  if (e.target.id === 'modalOverlay') {
-    window.closeModal();
+  // Dynamic light coloring based on sun height
+  if (elevation > 15) {
+    // Crisp Day
+    sunLight.intensity = 1.6;
+    sunLight.color.setHex(0xfffaec);
+    renderer.toneMappingExposure = 1.05;
+    scene.fog.color.setHex(0x9cb8cc);
+    windowMat.emissiveIntensity = 0.2;
+    cabinLight.intensity = 0.3;
+  } else if (elevation > -5) {
+    // Golden Hour / Sunset
+    sunLight.intensity = 1.2;
+    sunLight.color.setHex(0xff9a55);
+    renderer.toneMappingExposure = 1.15;
+    scene.fog.color.setHex(0x73483b);
+    windowMat.emissiveIntensity = 1.6;
+    cabinLight.intensity = 1.8;
+  } else {
+    // Night / Twilight
+    sunLight.intensity = 0.05;
+    renderer.toneMappingExposure = 0.85;
+    scene.fog.color.setHex(0x0a1218);
+    windowMat.emissiveIntensity = 3.2;
+    cabinLight.intensity = 2.4;
   }
-};
+}
+updateSunPosition();
 
 /* ==========================================================================
-   13. Animation Loop & Mobile Performance Tuning
+   7. Smooth Inertial Drone Orbit Navigation (Mouse & Touch)
+   ========================================================================== */
+const orbitState = {
+  spherical: new THREE.Spherical(75, Math.PI / 3, 0),
+  sphericalTarget: new THREE.Spherical(75, Math.PI / 3, 0),
+  center: new THREE.Vector3(0, 3, 0),
+  isDragging: false,
+  prevPointer: { x: 0, y: 0 }
+};
+
+function onPointerDown(e) {
+  orbitState.isDragging = true;
+  orbitState.prevPointer.x = e.clientX || (e.touches && e.touches[0].clientX) || 0;
+  orbitState.prevPointer.y = e.clientY || (e.touches && e.touches[0].clientY) || 0;
+}
+
+function onPointerMove(e) {
+  if (!orbitState.isDragging) return;
+
+  const clientX = e.clientX || (e.touches && e.touches[0].clientX) || 0;
+  const clientY = e.clientY || (e.touches && e.touches[0].clientY) || 0;
+
+  const deltaX = clientX - orbitState.prevPointer.x;
+  const deltaY = clientY - orbitState.prevPointer.y;
+
+  orbitState.prevPointer.x = clientX;
+  orbitState.prevPointer.y = clientY;
+
+  // Inertial target update
+  orbitState.sphericalTarget.theta -= deltaX * 0.005;
+  orbitState.sphericalTarget.phi = Math.max(
+    0.15,
+    Math.min(Math.PI / 2 - 0.05, orbitState.sphericalTarget.phi - deltaY * 0.005)
+  );
+}
+
+function onPointerUp() {
+  orbitState.isDragging = false;
+}
+
+function onWheel(e) {
+  orbitState.sphericalTarget.radius = Math.max(
+    14,
+    Math.min(130, orbitState.sphericalTarget.radius + e.deltaY * 0.06)
+  );
+}
+
+window.addEventListener('mousedown', onPointerDown);
+window.addEventListener('mousemove', onPointerMove);
+window.addEventListener('mouseup', onPointerUp);
+
+window.addEventListener('touchstart', onPointerDown, { passive: true });
+window.addEventListener('touchmove', onPointerMove, { passive: true });
+window.addEventListener('touchend', onPointerUp);
+window.addEventListener('wheel', onWheel, { passive: true });
+
+/* ==========================================================================
+   8. Animation Render Loop
    ========================================================================== */
 const clock = new THREE.Clock();
 
@@ -675,54 +488,63 @@ function animate() {
   const delta = clock.getDelta();
   const time = clock.getElapsedTime();
 
-  // Gentle flower sway in mountain breeze
-  sunflowerInstanced.rotation.y = Math.sin(time * 1.5) * 0.08;
-  roseInstanced.rotation.y = Math.cos(time * 1.8) * 0.06;
+  // Inertial smooth camera lerp (Damping)
+  orbitState.spherical.theta += (orbitState.sphericalTarget.theta - orbitState.spherical.theta) * 0.06;
+  orbitState.spherical.phi += (orbitState.sphericalTarget.phi - orbitState.spherical.phi) * 0.06;
+  orbitState.spherical.radius += (orbitState.sphericalTarget.radius - orbitState.spherical.radius) * 0.06;
+
+  // Auto slow panoramic drone drift when not dragging
+  if (!orbitState.isDragging) {
+    orbitState.sphericalTarget.theta += 0.0006;
+  }
+
+  camera.position.setFromSpherical(orbitState.spherical).add(orbitState.center);
+  camera.lookAt(orbitState.center);
 
   // Animate chimney smoke particles
-  const smokePos = smokeGeo.attributes.position.array;
+  const smPos = smokeGeo.attributes.position.array;
   for (let i = 0; i < smokeCount; i++) {
-    const data = smokeData[i];
-    smokePos[i * 3 + 1] += data.speedY;
-    smokePos[i * 3] += data.driftX;
-    smokePos[i * 3 + 2] += data.driftZ;
-
-    if (smokePos[i * 3 + 1] > 14.0) {
-      smokePos[i * 3 + 1] = data.baseY;
-      smokePos[i * 3] = 2.4 + (Math.random() - 0.5) * 0.4;
-      smokePos[i * 3 + 2] = -1.2 + (Math.random() - 0.5) * 0.4;
+    const d = smokeData[i];
+    smPos[i * 3 + 1] += d.speedY;
+    smPos[i * 3] += d.driftX;
+    smPos[i * 3 + 2] += d.driftZ;
+    if (smPos[i * 3 + 1] > 15.0) {
+      smPos[i * 3 + 1] = d.baseY;
+      smPos[i * 3] = 2.8 + (Math.random() - 0.5) * 0.4;
+      smPos[i * 3 + 2] = -1.6 + (Math.random() - 0.5) * 0.4;
     }
   }
   smokeGeo.attributes.position.needsUpdate = true;
 
-  // Animate tea steam particles
-  const steamPosArr = steamGeo.attributes.position.array;
+  // Animate Dudh Cha steam
+  const stPos = steamGeo.attributes.position.array;
   for (let i = 0; i < steamCount; i++) {
-    const data = steamData[i];
-    steamPosArr[i * 3 + 1] += data.speedY;
-    if (steamPosArr[i * 3 + 1] > 3.4) {
-      steamPosArr[i * 3 + 1] = data.baseY;
-      steamPosArr[i * 3] = (Math.random() - 0.5) * 0.2;
-      steamPosArr[i * 3 + 2] = 4.8 + (Math.random() - 0.5) * 0.2;
+    const d = steamData[i];
+    stPos[i * 3 + 1] += d.speedY;
+    if (stPos[i * 3 + 1] > 3.8) {
+      stPos[i * 3 + 1] = d.baseY;
+      stPos[i * 3] = (Math.random() - 0.5) * 0.2;
+      stPos[i * 3 + 2] = 5.4 + (Math.random() - 0.5) * 0.2;
     }
   }
   steamGeo.attributes.position.needsUpdate = true;
 
+  // Gentle flower sway
+  sfMesh.rotation.y = Math.sin(time * 1.5) * 0.06;
+  roseMesh.rotation.y = Math.cos(time * 1.7) * 0.05;
+
   renderer.render(scene, camera);
 }
-
-// Initial cycle update
-updateDayNightCycle(state.timeProgress);
 animate();
 
-// Remove loading screen smoothly once scene is ready
+// Hide loader when scene is ready
 window.addEventListener('load', () => {
   setTimeout(() => {
     loader.classList.add('hidden');
-  }, 400);
+  }, 300);
 });
 
-// Window resize handler
+// Window resize
 window.addEventListener('resize', () => {
   camera.aspect = window.innerWidth / window.innerHeight;
   camera.updateProjectionMatrix();

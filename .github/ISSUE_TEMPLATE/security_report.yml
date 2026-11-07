@@ -1,0 +1,43 @@
+name: Security Report
+description: Suggest security improvements, report dependency vulnerabilities, or request hardening.
+labels: [security]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ### Important Notice
+        If you are reporting a critical security vulnerability that could compromise user deployments or leak sensitive developer keys, please do **not** open a public issue. Refer to [SECURITY.md](https://github.com/naborajs/birthday-bloom/blob/main/SECURITY.md) to report it privately.
+
+  - type: textarea
+    id: details
+    attributes:
+      label: Security Hardening or Issue Description
+      description: Provide clear details of the security issue, vulnerabilities identified, or proposed hardening.
+    validations:
+      required: true
+
+  - type: textarea
+    id: replication
+    attributes:
+      label: Steps to Reproduce / Proof of Concept
+      description: Provide reproduction steps, payload details, or proof of concept if public-safe.
+
+  - type: dropdown
+    id: level
+    attributes:
+      label: Difficulty Level
+      description: Select the estimated difficulty level.
+      options:
+        - "level: beginner (Good first issue, simple CSS/HTML tweaks)"
+        - "level: intermediate (Standard React components and state)"
+        - "level: advanced (Complex animations, core architecture changes)"
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Before submitting
+      options:
+        - label: I verified that this does not disclose a critical/exploitable vulnerability publicly
+          required: true

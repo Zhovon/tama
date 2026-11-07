@@ -1,0 +1,14 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Official Documentation Portal
+    url: https://naborajs.me/projects/birthday-bloom/docs
+    about: Explore all 38 interactive documentation guides and simulators
+  - name: Environment Configuration Guide
+    url: https://naborajs.me/projects/birthday-bloom/docs/env-guide
+    about: Master reference for all 53 environment variables and recipes
+  - name: Troubleshooting & Error Diagnostics
+    url: https://naborajs.me/projects/birthday-bloom/docs/troubleshooting
+    about: Solutions for common runtime, audio, and deployment issues
+  - name: Security Policy & Privacy Guarantees
+    url: https://naborajs.me/projects/birthday-bloom/docs/security
+    about: Review zero-telemetry invariant and report vulnerabilities responsibly

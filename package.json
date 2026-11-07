@@ -1,21 +1,95 @@
 {
-  "name": "for-tama-webgl",
+  "name": "birthday-bloom",
   "private": true,
-  "version": "1.0.0",
+  "version": "3.5.0",
   "type": "module",
+  "license": "MIT",
+  "author": "Naboraj Sarkar",
+  "homepage": "https://github.com/naborajs/birthday-bloom#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/naborajs/birthday-bloom.git"
+  },
+  "bugs": {
+    "url": "https://github.com/naborajs/birthday-bloom/issues"
+  },
+  "description": "Magical, cinematic open-source birthday celebration web app built with React 18, Three.js, React Three Fiber, Framer Motion, Zustand, and Tailwind CSS. Fully customizable via URL parameters and environment variables.",
+  "keywords": [
+    "react-18",
+    "threejs",
+    "react-three-fiber",
+    "webgl",
+    "framer-motion",
+    "zustand",
+    "tailwind-css",
+    "canvas-2d",
+    "creative-coding",
+    "interactive-webgl",
+    "birthday-app",
+    "good-first-issue",
+    "open-source",
+    "hacktoberfest",
+    "first-timers-only",
+    "pair-programming",
+    "vitest",
+    "typescript",
+    "particles-animation",
+    "web-audio-api"
+  ],
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "build:dev": "vite build --mode development",
+    "lint": "eslint .",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit",
+    "verify": "npm run typecheck && npm run lint && npm test && npm run build"
   },
   "dependencies": {
-    "three": "^0.170.0",
-    "gsap": "^3.12.5",
-    "lenis": "^1.1.18"
+    "@radix-ui/react-tooltip": "^1.2.16",
+    "@react-spring/three": "^10.1.2",
+    "@react-three/drei": "^9.122.0",
+    "@react-three/fiber": "^8.18.0",
+    "canvas-confetti": "^1.9.4",
+    "clsx": "^2.1.1",
+    "framer-motion": "^13.1.1",
+    "lucide-react": "^0.462.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^7.18.3",
+    "sonner": "^1.7.4",
+    "tailwind-merge": "^3.6.0",
+    "tailwindcss-animate": "^1.0.7",
+    "three": "^0.185.1",
+    "zustand": "^5.0.15"
   },
   "devDependencies": {
-    "vite": "^5.4.10",
-    "vite-plugin-glsl": "^1.3.0"
+    "@eslint/js": "^9.32.0",
+    "@testing-library/jest-dom": "^6.6.0",
+    "@testing-library/react": "^16.3.3",
+    "@types/node": "^22.16.5",
+    "@types/react": "18.3.23",
+    "@types/react-dom": "18.3.7",
+    "@types/three": "^0.185.1",
+    "@vitejs/plugin-react-swc": "^4.3.3",
+    "autoprefixer": "^10.5.4",
+    "eslint": "^9.32.0",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-react-refresh": "^0.5.5",
+    "globals": "^17.11.0",
+    "jsdom": "^20.0.3",
+    "playwright": "^1.63.0",
+    "postcss": "^8.5.25",
+    "tailwindcss": "^3.4.19",
+    "typescript": "^5.8.3",
+    "typescript-eslint": "^8.68.0",
+    "vite": "^8.2.2",
+    "vitest": "^3.2.4"
+  },
+  "overrides": {
+    "brace-expansion": "^2.1.4",
+    "nanoid": "^3.3.18"
   }
 }
-

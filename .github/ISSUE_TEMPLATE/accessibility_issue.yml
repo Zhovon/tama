@@ -1,0 +1,43 @@
+name: Accessibility Issue
+description: Report an accessibility (WCAG) problem or suggest keyboard navigation/contrast improvements.
+labels: [accessibility]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping make Birthday Bloom accessible to everyone! Please fill out the details below.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Description of the accessibility issue
+      description: What is the barrier? (e.g., cannot focus button with Tab, screen reader doesn't read the cake-cutting overlay)
+    validations:
+      required: true
+
+  - type: input
+    id: assistive_tech
+    attributes:
+      label: Assistive Technology used (if applicable)
+      description: e.g., NVDA, JAWS, VoiceOver, Keyboard only, High Contrast Mode
+      placeholder: VoiceOver on iOS
+
+  - type: dropdown
+    id: level
+    attributes:
+      label: Difficulty Level
+      description: Select the estimated difficulty level.
+      options:
+        - "level: beginner (Good first issue, simple CSS/HTML tweaks)"
+        - "level: intermediate (Standard React components and state)"
+        - "level: advanced (Complex animations, core architecture changes)"
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Before submitting
+      options:
+        - label: I have searched existing issues for duplicates
+          required: true

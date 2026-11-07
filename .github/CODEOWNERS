@@ -1,0 +1,21 @@
+# Default owner for all files
+* @naborajs
+
+# GitHub configuration and templates
+.github/ @naborajs
+
+# Documentation
+docs/ @naborajs
+*.md @naborajs
+
+# Core source code
+src/ @naborajs
+
+# Configuration files
+.env.example @naborajs
+vite.config.ts @naborajs
+tailwind.config.ts @naborajs
+tsconfig*.json @naborajs
+
+# Deployment
+vercel.json @naborajs

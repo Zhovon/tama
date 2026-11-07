@@ -1,0 +1,60 @@
+name: Documentation Improvement
+description: Suggest changes to Birthday Bloom's documentation
+labels: [documentation]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Help us make Birthday Bloom's docs better. Thank you!
+
+  - type: dropdown
+    id: doc_type
+    attributes:
+      label: Which documentation area?
+      options:
+        - README
+        - ENV_GUIDE.md
+        - Architecture docs
+        - Contributing guide
+        - Setup / installation docs
+        - Deployment docs
+        - Troubleshooting docs
+        - Other
+
+  - type: textarea
+    id: issue
+    attributes:
+      label: What is confusing, missing, or wrong?
+      description: Be specific — point to the file and section if possible.
+    validations:
+      required: true
+
+  - type: textarea
+    id: suggestion
+    attributes:
+      label: Suggested Improvement
+      description: How would you improve it?
+    validations:
+      required: true
+
+  - type: dropdown
+    id: audience
+    attributes:
+      label: Who would this help?
+      options:
+        - New users trying to customize the app
+        - Developers contributing to the codebase
+        - Deployers / DevOps
+        - Everyone
+
+  - type: dropdown
+    id: level
+    attributes:
+      label: Difficulty Level
+      description: Select the estimated difficulty level.
+      options:
+        - "level: beginner (Good first issue, simple CSS/HTML tweaks)"
+        - "level: intermediate (Standard React components and state)"
+        - "level: advanced (Complex animations, core architecture changes)"
+    validations:
+      required: true

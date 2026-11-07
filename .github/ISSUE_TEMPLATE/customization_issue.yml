@@ -1,0 +1,47 @@
+name: Customization & Theme Issue
+description: Report issues related to personalization, custom family templates, and theme settings.
+labels: [customization]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Personalization is at the core of Birthday Bloom. Please help us fix any issues in configuring and customizing the site!
+
+  - type: textarea
+    id: details
+    attributes:
+      label: Customization details
+      description: Explain what you are trying to customize (e.g., custom relationship labels, interests, emojis, custom letter overrides) and what is not working as expected.
+    validations:
+      required: true
+
+  - type: textarea
+    id: env_vars
+    attributes:
+      label: Relevant Env Configuration
+      description: Share the VITE_* environment variables you are using (redact any sensitive information).
+      placeholder: |
+        VITE_BIRTHDAY_RELATIONSHIP=custom
+        VITE_FAMILY_CLOSENESS=8
+        VITE_THEME=nostalgic
+
+  - type: dropdown
+    id: level
+    attributes:
+      label: Difficulty Level
+      description: Select the estimated difficulty level.
+      options:
+        - "level: beginner (Good first issue, simple CSS/HTML tweaks)"
+        - "level: intermediate (Standard React components and state)"
+        - "level: advanced (Complex animations, core architecture changes)"
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Before submitting
+      options:
+        - label: I have searched existing issues for duplicates
+          required: true
+        - label: I verified that the variables are formatted correctly in my .env file

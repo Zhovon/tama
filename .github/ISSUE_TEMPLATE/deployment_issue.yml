@@ -1,0 +1,53 @@
+name: Deployment & CI-CD Issue
+description: Report build errors, package manager issues, or problems deploying to Vercel/Netlify.
+labels: [ci-cd]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Please help us identify any errors during build, static compilation, or deployment.
+
+  - type: dropdown
+    id: platform
+    attributes:
+      label: Deployment Platform / Host
+      options:
+        - Vercel (Recommended)
+        - Netlify
+        - GitHub Pages
+        - Docker Container
+        - Self-hosted (PM2, static server)
+        - Local Node environment
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: error_log
+    attributes:
+      label: Build Error Log
+      description: Paste any relevant terminal logs, build traces, or console errors.
+      placeholder: npm ERR! build failed...
+    validations:
+      required: true
+
+  - type: dropdown
+    id: level
+    attributes:
+      label: Difficulty Level
+      description: Select the estimated difficulty level.
+      options:
+        - "level: beginner (Good first issue, simple CSS/HTML tweaks)"
+        - "level: intermediate (Standard React components and state)"
+        - "level: advanced (Complex animations, core architecture changes)"
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Before submitting
+      options:
+        - label: I verified that the local build runs successfully with npm run build
+        - label: I checked if the Node.js version is 20 or higher
+          required: true

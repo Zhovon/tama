@@ -1,0 +1,72 @@
+name: Performance Issue
+description: Report a performance regression or optimization opportunity
+labels: [performance]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Help keep Birthday Bloom smooth and fast. Please provide as much detail as possible.
+
+  - type: textarea
+    id: summary
+    attributes:
+      label: What feels slow or janky?
+      description: Be specific about which part of the experience is affected.
+    validations:
+      required: true
+
+  - type: input
+    id: device
+    attributes:
+      label: Device & Browser
+      description: e.g., Pixel 7 / Chrome, MacBook Pro M2 / Safari
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction Path
+      description: Steps to see the performance issue.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Which area is affected?
+      options:
+        - Intro / cinematic sequence
+        - Main dashboard / scrolling
+        - Cake cutting interaction
+        - Photo gallery
+        - Heart tree animation
+        - Particle effects / confetti
+        - Video playback
+        - Page load / initial render
+        - Other
+
+  - type: textarea
+    id: metrics
+    attributes:
+      label: Observed Metrics
+      description: FPS, load time, Lighthouse scores if measured.
+      placeholder: "e.g., ~20fps during cake cutting on Pixel 7"
+
+  - type: textarea
+    id: recordings
+    attributes:
+      label: Recordings / Profiles
+      description: Chrome DevTools Performance tab recordings, screenshots, or videos.
+
+  - type: dropdown
+    id: level
+    attributes:
+      label: Difficulty Level
+      description: Select the estimated difficulty level.
+      options:
+        - "level: beginner (Good first issue, simple CSS/HTML tweaks)"
+        - "level: intermediate (Standard React components and state)"
+        - "level: advanced (Complex animations, core architecture changes)"
+    validations:
+      required: true

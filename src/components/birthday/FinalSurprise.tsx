@@ -1,0 +1,144 @@
+import { useMemo } from "react";
+import { motion } from "framer-motion";
+import { useBirthdayStore } from "@/features/core/store/useBirthdayStore";
+import { Heart, Stars, Video, Sparkles, Camera } from "lucide-react";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { getYouTubeEmbedUrl } from "@/lib/utils";
+import { useTranslation } from "@/i18n";
+import { getBigWishes } from "@/features/core/store/SuperPersonalizedLogic";
+import { getTemplateEmojiKit } from "@/config/emojiKits";
+
+import { isRealImageUrl, isValidVideoUrl } from "@/utils/mediaUtils";
+
+export const FinalSurprise = () => {
+    const { config } = useBirthdayStore();
+    const { isHindi, isBengali, isFrench, language } = useTranslation();
+    const isMobile = useIsMobile();
+    const allMemories = config.specialMemories || [];
+    const memories = allMemories.filter(m => m.text && (isRealImageUrl(m.image) || !m.image));
+    const hasRealMemories = memories.length > 0 && memories.some(m => isRealImageUrl(m.image));
+    const primaryColor = config.favoriteColor || "#ff0080";
+    const isValidVideo = isValidVideoUrl(config.finalVideoUrl);
+    const finalVideoEmbed = isValidVideo && config.finalVideoUrl ? getYouTubeEmbedUrl(config.finalVideoUrl) : "";
+    const finalVideoSrc = finalVideoEmbed.includes("youtube.com/embed")
+        ? `${finalVideoEmbed}?autoplay=0&controls=1&rel=0`
+        : finalVideoEmbed;
+    const hasValidVideo = Boolean(isValidVideo && finalVideoSrc);
+
+    const bigWishes = useMemo(
+        () =>
+            getBigWishes(
+                config.name || (isFrench ? "Toi" : isBengali ? "প্রিয়" : isHindi ? "प्रिय" : "You"),
+                config.relationship || "partner",
+                config.gender || "female",
+                config.interests || [],
+                language
+            ),
+        [config.name, config.relationship, config.gender, config.interests, language, isFrench, isBengali, isHindi]
+    );
+    const emojiKit = useMemo(() => getTemplateEmojiKit(config), [config]);
+
+    return (<section className="relative z-20 py-32 px-4 overflow-hidden" aria-label="Final Surprise and Memories">
+      <div className="max-w-6xl mx-auto">
+        {hasRealMemories && (<>
+          <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="text-center mb-20">
+            <h2 className="font-display text-5xl md:text-8xl font-black mb-6 bg-gradient-to-r from-primary via-white to-accent bg-clip-text text-transparent">
+              {isFrench ? "Nos Souvenirs Spéciaux 🏞️" : isBengali ? "আমাদের বিশেষ স্মৃতিগুলো 🏞️" : isHindi ? "हमारी खास यादें 🏞️" : "Our Special Memories 🏞️"}
+            </h2>
+            <p className="text-xl md:text-2xl text-foreground/60 max-w-2xl mx-auto italic">
+              {isFrench ? "« Un voyage de mille lieues commence par un premier pas, mais ce sont les moments partagés qui lui donnent tout son sens. »" : isBengali ? "“হাজার মাইলের যাত্রা একটি পদক্ষেপ দিয়ে শুরু হয়, কিন্তু সুন্দর স্মৃতিগুলোই এই যাত্রাকে সার্থক করে তোলে।”" : isHindi ? "“हजारों मीलों का सफर एक कदम से शुरू होता है, लेकिन वे खूबसूरत लम्हें ही हैं जो इस सफर को यादगार बनाते हैं।”" : "\"A journey of a thousand miles begins with a single step, but it's the moments we share that make it worth traveling.\""}
+            </p>
+          </motion.div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-32">
+            {memories.map((memory, i) => (<motion.div key={i} initial={{ opacity: 0, y: 50, rotate: i % 2 === 0 ? -2 : 2 }} whileInView={{ opacity: 1, y: 0, rotate: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.2 }} whileHover={{ scale: 1.05, y: -10, rotate: i % 2 === 0 ? 2 : -2 }} className="group relative aspect-[4/5] bg-white/5 border border-white/10 p-4 rounded-3xl backdrop-blur-xl overflow-hidden shadow-2xl">
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity"/>
+                {memory.image ? (<img src={memory.image} alt={memory.text || `Special celebration memory ${i + 1}`} className="w-full h-full object-cover rounded-2xl grayscale group-hover:grayscale-0 transition-all duration-700"/>) : (<div className="w-full h-full flex items-center justify-center bg-white/5 rounded-2xl">
+                    <Camera size={48} className="text-white/10"/>
+                  </div>)}
+                <div className="absolute bottom-8 left-8 right-8">
+                  <p className="text-xl md:text-2xl font-display font-bold text-white drop-shadow-lg leading-tight">
+                    {memory.text}
+                  </p>
+                </div>
+              </motion.div>))}
+          </div>
+        </>)}
+
+        {hasValidVideo && (<motion.div initial={{ opacity: 0, scale: isMobile ? 1 : 0.9 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} className={isMobile ? "relative max-w-4xl mx-auto rounded-[2rem] overflow-hidden border border-white/20 shadow-[0_0_80px_-20px_var(--color-primary)] bg-black/70 backdrop-blur-xl" : "relative max-w-4xl mx-auto rounded-[3rem] overflow-hidden border border-white/20 shadow-[0_0_100px_-20px_var(--color-primary)] bg-black/40 backdrop-blur-3xl"}>
+            <div className="aspect-video w-full">
+              <iframe src={finalVideoSrc} loading="lazy" className="w-full h-full" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen title="Final Surprise Video"/>
+            </div>
+            <div className="p-10 text-center bg-gradient-to-t from-black/80 to-transparent">
+              <h3 className="font-display text-2xl md:text-4xl font-black mb-4">{isFrench ? "L'Ultime Surprise 🎬" : isBengali ? "শেষ সারপ্রাইজ 🎬" : isHindi ? "आखरी सरप्राइज 🎬" : "The Final Surprise 🎬"}</h3>
+              <p className="text-lg md:text-xl text-white/60 font-light">{isFrench ? "Une petite touche spéciale pour illuminer votre cœur et faire sourire votre âme." : isBengali ? "আপনার মুখে একটি মিষ্টি হাসি ফুটিয়ে তোলার জন্য একটি ছোট্ট উপহার।" : isHindi ? "आपके चेहरे पर एक प्यारी सी मुस्कान लाने के लिए एक छोटा सा तोहफा।" : "A little something extra to make your heart smile."}</p>
+            </div>
+          </motion.div>)}
+
+        {/* Personalized Big Wishes 3D Glassmorphic Showcase */}
+        {bigWishes.length > 0 && (
+          <div className="mt-24 max-w-4xl mx-auto" style={{ perspective: "1200px" }}>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              {bigWishes.map((item, idx) => (
+                <motion.div
+                  key={idx}
+                  initial={{ opacity: 0, y: 24 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: idx * 0.1, duration: 0.5 }}
+                  whileHover={!isMobile ? { y: -6, rotateX: 4, rotateY: idx % 2 === 0 ? -4 : 4, scale: 1.02 } : undefined}
+                  className="relative p-6 sm:p-7 rounded-3xl border border-white/15 bg-white/[0.04] backdrop-blur-2xl shadow-[0_20px_50px_rgba(0,0,0,0.45)] flex items-start gap-4 text-left overflow-hidden"
+                  style={{
+                    transformStyle: "preserve-3d",
+                    boxShadow: `0 20px 50px rgba(0,0,0,0.45), inset 0 0 24px ${primaryColor}1A`,
+                  }}
+                >
+                  <div
+                    className="w-12 h-12 rounded-2xl flex items-center justify-center text-2xl shrink-0 border border-white/20 shadow-lg"
+                    style={{
+                      background: `linear-gradient(135deg, ${primaryColor}40, rgba(255,255,255,0.08))`,
+                    }}
+                  >
+                    {item.emoji}
+                  </div>
+                  <p className="text-base sm:text-lg text-white/90 font-medium leading-relaxed">
+                    {item.wish}
+                  </p>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="mt-28 text-center space-y-12 pb-40">
+          <motion.div animate={isMobile ? { scale: [1, 1.05, 1], rotate: [0, 0, 0] } : { scale: [1, 1.2, 1], rotate: [0, 10, -10, 0] }} transition={{ duration: isMobile ? 6 : 4, repeat: Infinity, ease: "easeInOut" }} className="inline-block">
+            <Heart size={80} fill={primaryColor} className="text-primary drop-shadow-[0_0_30px_var(--color-primary)]"/>
+          </motion.div>
+          <div className="space-y-6">
+            <h2 className="font-display text-4xl md:text-7xl font-black tracking-tight leading-tight">
+              {isFrench ? "J'espère que cette journée a été " : isBengali ? "আশা করি এটি আপনার দিনটিকে " : isHindi ? "उम्मीद है यह आपके दिन को " : "I Hope This Made Your "} <br />
+              <span style={{ color: primaryColor }} className="animate-pulse">{isFrench ? "aussi spéciale et merveilleuse que vous l'êtes" : isBengali ? "আপনার মতোই সুন্দর ও বিশেষ করে তুলবে" : isHindi ? "उतना ही खास बनाएगा जितने आप हैं" : "Day As Special As You Are"}</span>
+            </h2>
+            <p className="text-xl md:text-3xl font-light text-foreground/60 max-w-3xl mx-auto leading-relaxed">
+              {isFrench ? "Chaque pixel, chaque animation et chaque mot a été conçu avec tout notre amour." : isBengali ? "প্রতিটি পিক্সেল, প্রতিটি অ্যানিমেশন এবং প্রতিটি শব্দ শুধু নিখাদ ভালোবাসা দিয়ে তৈরি।" : isHindi ? "हर एक पिक्सेल, हर एनिमेशन और हर शब्द सिर्फ और सिर्फ प्यार से सजाया गया है।" : "Every pixel, every animation, and every word was crafted with love."} <br />
+              {isFrench ? `Encore une fois, très Joyeux Anniversaire, ${config.name}. ✨` : isBengali ? `আরও একবার জন্মদিনের অফুরন্ত শুভেচ্ছা, ${config.name}। ✨` : isHindi ? `एक बार फिर जन्मदिन की ढेर सारी शुभकामनाएं, ${config.name}। ✨` : `Happy Birthday once again, ${config.name}. ✨`}
+            </p>
+          </div>
+          <div className="flex flex-wrap justify-center items-center gap-3 text-xl">
+            {(emojiKit.celebration || []).slice(0, 6).map((em, idx) => (
+              <span
+                key={idx}
+                className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center shadow-md"
+              >
+                {em}
+              </span>
+            ))}
+          </div>
+          <div className={`flex justify-center gap-8 text-white/20 ${isMobile ? 'opacity-70' : ''}`}>
+            <Stars size={32} className={isMobile ? "" : "animate-spin-slow"}/>
+            <Sparkles size={32} className={isMobile ? "" : "animate-pulse"}/>
+            <Video size={32} className={isMobile ? "" : "animate-bounce"}/>
+          </div>
+        </motion.div>
+      </div>
+    </section>);
+};

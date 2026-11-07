@@ -1,0 +1,18 @@
+# .github/labeler.yml
+# Configuration for actions/labeler v5
+
+documentation:
+  - changed-files:
+      - any-glob-to-any-file: ['obsidian-docs/**/*', '*.md']
+
+customization:
+  - changed-files:
+      - any-glob-to-any-file: ['.env.example', 'ENV_GUIDE.md', 'src/config/**/*', 'src/features/core/models/familyTemplates.ts']
+
+ci-cd:
+  - changed-files:
+      - any-glob-to-any-file: ['.github/workflows/**/*', '.github/dependabot.yml', 'vercel.json', 'package.json']
+
+refactor:
+  - changed-files:
+      - any-glob-to-any-file: ['src/utils/**/*', 'src/lib/**/*', 'src/features/core/store/**/*']

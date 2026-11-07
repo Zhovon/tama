@@ -1,37 +1,37 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Aysha's Mountain Sanctuary 🏔️</title>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <meta property="og:title" content="Aysha's Mountain Sanctuary 🏔️">
-  <meta property="og:description" content="A photorealistic mountain haven with real-time atmospheric sky, morning mist, and solitary cabin.">
-  <meta property="og:type" content="website">
-  <meta name="theme-color" content="#0a0e11">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
-  <link rel="stylesheet" href="./src/style.css">
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="/favicon.ico?v=2" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=2" />
+  <meta name="theme-color" content="#1a0515" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="application-name" content="Happy Birthday Tama" />
+
+  <!-- Core Metadata -->
+  <title>Happy Birthday, Tama 🌸✨</title>
+  <meta name="description" content="A magical birthday celebration crafted with love for Aysha Siddiquea Tamanna (Tama)." />
+
+  <!-- Open Graph / WhatsApp -->
+  <meta property="og:title" content="Happy Birthday, Tama 🌸✨" />
+  <meta property="og:description" content="A magical birthday surprise crafted with love for Aysha Siddiquea Tamanna (Tama)." />
+  <meta property="og:type" content="website" />
 </head>
-<body>
 
-  <!-- Loading Screen -->
-  <div id="loader">
-    <div class="loader-spinner"></div>
-    <div class="loader-title">The Mountain Sanctuary</div>
-    <div class="loader-subtitle">Rendering atmospheric sky & mountain ridges...</div>
-  </div>
-
-  <!-- Fullscreen 3D WebGL Canvas -->
-  <canvas id="webgl-canvas"></canvas>
-
-  <!-- Minimalist Studio Watermark (Fades gently) -->
-  <div class="cinematic-overlay" id="cinematicOverlay">
-    <div class="cinematic-title">Aysha's Mountain Haven</div>
-    <div class="cinematic-subtitle">Drag to look around • Scroll to journey</div>
-  </div>
-
-  <script type="module" src="./src/main.js"></script>
+<body class="bg-background text-foreground antialiased selection:bg-primary/20 selection:text-primary">
+  <div id="root"></div>
+  <script type="module" src="/src/main.tsx"></script>
 </body>
+
 </html>

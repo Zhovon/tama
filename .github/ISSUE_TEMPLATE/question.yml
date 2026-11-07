@@ -1,0 +1,43 @@
+name: Question
+description: Ask a question about using or contributing to Birthday Bloom
+labels: [question]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Before asking, please check:
+        - [ENV_GUIDE.md](https://github.com/naborajs/birthday-bloom/blob/main/docs/ENV_GUIDE.md) for env configuration questions
+        - [Troubleshooting](https://github.com/naborajs/birthday-bloom/blob/main/docs/troubleshooting.md) for common issues
+        - [FAQ](https://github.com/naborajs/birthday-bloom/blob/main/FAQ.md) for frequent questions
+
+  - type: textarea
+    id: question
+    attributes:
+      label: Your Question
+      description: What would you like to know?
+    validations:
+      required: true
+
+  - type: dropdown
+    id: category
+    attributes:
+      label: Category
+      options:
+        - Setup / Installation
+        - Customization / Env Configuration
+        - Deployment
+        - Development / Contributing
+        - Feature availability
+        - Other
+
+  - type: dropdown
+    id: level
+    attributes:
+      label: Difficulty Level
+      description: Select the estimated difficulty level.
+      options:
+        - "level: beginner (Good first issue, simple CSS/HTML tweaks)"
+        - "level: intermediate (Standard React components and state)"
+        - "level: advanced (Complex animations, core architecture changes)"
+    validations:
+      required: true

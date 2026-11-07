@@ -2,3 +2,6 @@ node_modules
 .DS_Store
 dist
 
+
+bloom/node_modules
+bloom/dist

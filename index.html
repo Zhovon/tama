@@ -3,1334 +3,180 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Happy Birthday, Tama 🌿🌹 For My Soft-Hearted Sunflower</title>
+  <title>Aysha's Mountain Sanctuary 🏔️ Happy Birthday Tama</title>
   
-  <!-- OpenGraph / Social Sharing Preview for WhatsApp & Messages -->
   <meta property="og:title" content="Happy Birthday, Tama 🌿🌻">
-  <meta property="og:description" content="A quiet haven of village greenery, steaming dudh cha, and endless reassurance for Aysha Siddiquea Tamanna.">
+  <meta property="og:description" content="A real-time 3D mountain haven with morning mist, golden sunsets, hot dudh cha, and starry night skies crafted for Aysha Siddiquea Tamanna.">
   <meta property="og:type" content="website">
-  <meta name="theme-color" content="#233e33">
+  <meta name="theme-color" content="#0a0e11">
+  <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600&family=Caveat:wght@500;700&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --bg-cream: #faf7f2;
-      --bg-card: #ffffff;
-      --nature-forest: #233e33;
-      --nature-sage: #5e8366;
-      --nature-soft-green: #eaf2e8;
-      --nature-earth: #80614c;
-      --rose-deep: #c45d5a;
-      --rose-soft: #fcf1ee;
-      --sunflower-gold: #e5a93b;
-      --sunflower-warm: #fff8e8;
-      --cha-clay: #965337;
-      --text-dark: #242926;
-      --text-muted: #626c65;
-      --border-subtle: rgba(94, 131, 102, 0.18);
-      --shadow-cozy: 0 10px 30px -8px rgba(35, 62, 51, 0.08);
-      --shadow-hover: 0 16px 36px -6px rgba(35, 62, 51, 0.14);
-    }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    body {
-      background-color: var(--bg-cream);
-      color: var(--text-dark);
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      overflow-x: hidden;
-      line-height: 1.65;
-      position: relative;
-      min-height: 100vh;
-      background-image: 
-        radial-gradient(circle at 10% 12%, rgba(234, 242, 232, 0.85) 0%, transparent 45%),
-        radial-gradient(circle at 90% 88%, rgba(255, 248, 232, 0.75) 0%, transparent 50%),
-        radial-gradient(circle at 50% 50%, rgba(250, 247, 242, 0.6) 0%, transparent 100%);
-      background-attachment: fixed;
-    }
-
-    /* Ambient Canvas */
-    #nature-canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      pointer-events: none;
-      z-index: 1;
-    }
-
-    .container {
-      max-width: 680px;
-      margin: 0 auto;
-      padding: 24px 18px 90px;
-      position: relative;
-      z-index: 2;
-    }
-
-    /* Audio Toggle */
-    .audio-pill {
-      position: fixed;
-      top: 16px;
-      right: 16px;
-      z-index: 100;
-      background: rgba(255, 255, 255, 0.92);
-      backdrop-filter: blur(10px);
-      border: 1px solid var(--border-subtle);
-      border-radius: 30px;
-      padding: 8px 16px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      cursor: pointer;
-      box-shadow: 0 4px 18px rgba(35, 62, 51, 0.08);
-      transition: all 0.3s ease;
-      font-size: 0.82rem;
-      color: var(--text-muted);
-      font-weight: 500;
-    }
-
-    .audio-pill:hover {
-      transform: translateY(-2px);
-      color: var(--nature-forest);
-      box-shadow: 0 6px 22px rgba(35, 62, 51, 0.12);
-    }
-
-    .audio-pill.playing .leaf-disc {
-      animation: spinLeaf 3.5s linear infinite;
-    }
-
-    @keyframes spinLeaf {
-      100% { transform: rotate(360deg); }
-    }
-
-    /* Header */
-    header {
-      text-align: center;
-      padding: 55px 8px 30px;
-    }
-
-    .name-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 6px 16px;
-      background: var(--nature-soft-green);
-      color: var(--nature-forest);
-      border-radius: 20px;
-      font-size: 0.8rem;
-      font-weight: 600;
-      letter-spacing: 0.4px;
-      margin-bottom: 18px;
-      border: 1px solid rgba(94, 131, 102, 0.25);
-    }
-
-    h1 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(2.3rem, 7vw, 3.4rem);
-      font-weight: 600;
-      color: var(--nature-forest);
-      line-height: 1.15;
-      margin-bottom: 10px;
-    }
-
-    .sub-name {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.35rem;
-      color: var(--nature-earth);
-      font-style: italic;
-      margin-bottom: 14px;
-      display: block;
-    }
-
-    .hero-subtitle {
-      font-size: 1.02rem;
-      color: var(--text-muted);
-      max-width: 500px;
-      margin: 0 auto;
-      font-weight: 300;
-      line-height: 1.65;
-    }
-
-    /* Grounding Card */
-    .breathe-card {
-      background: rgba(255, 255, 255, 0.85);
-      backdrop-filter: blur(12px);
-      border: 1px solid var(--border-subtle);
-      border-radius: 22px;
-      padding: 22px;
-      text-align: center;
-      margin: 25px 0 35px;
-      box-shadow: var(--shadow-cozy);
-    }
-
-    .breathe-circle {
-      width: 68px;
-      height: 68px;
-      background: linear-gradient(135deg, #e4eee2, #fbf0dc);
-      border-radius: 50%;
-      margin: 0 auto 12px;
-      animation: pulseBreath 7s ease-in-out infinite;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.7rem;
-      box-shadow: 0 0 25px rgba(94, 131, 102, 0.25);
-    }
-
-    @keyframes pulseBreath {
-      0%, 100% { transform: scale(0.92); opacity: 0.85; }
-      50% { transform: scale(1.22); opacity: 1; }
-    }
-
-    .breathe-text {
-      font-size: 0.9rem;
-      color: var(--text-muted);
-      font-style: italic;
-    }
-
-    /* Cozy Card System */
-    .cozy-card {
-      background: var(--bg-card);
-      border-radius: 24px;
-      padding: 28px 24px;
-      margin-bottom: 30px;
-      border: 1px solid var(--border-subtle);
-      box-shadow: var(--shadow-cozy);
-    }
-
-    .section-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.8rem;
-      font-weight: 600;
-      color: var(--nature-forest);
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 6px;
-    }
-
-    .section-desc {
-      color: var(--text-muted);
-      font-size: 0.9rem;
-      margin-bottom: 20px;
-    }
-
-    /* Dudh Cha Station */
-    .cha-banner {
-      background: linear-gradient(135deg, #fdf8f4, #fbf1e8);
-      border-radius: 18px;
-      padding: 22px;
-      text-align: center;
-      border: 1px dashed rgba(150, 83, 55, 0.25);
-      position: relative;
-    }
-
-    .cha-cup {
-      font-size: 3.2rem;
-      display: inline-block;
-      margin-bottom: 8px;
-      animation: floatCup 3s ease-in-out infinite;
-    }
-
-    @keyframes floatCup {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-5px); }
-    }
-
-    .cha-quote {
-      font-family: 'Caveat', cursive;
-      font-size: 1.35rem;
-      color: var(--cha-clay);
-      line-height: 1.35;
-      max-width: 440px;
-      margin: 0 auto;
-    }
-
-    .cha-note {
-      font-size: 0.82rem;
-      color: var(--text-muted);
-      margin-top: 8px;
-    }
-
-    /* Rose & Sunflower Garden */
-    .flower-duo {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-      margin-bottom: 14px;
-    }
-
-    .flower-box {
-      border-radius: 18px;
-      padding: 20px 14px;
-      text-align: center;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      user-select: none;
-    }
-
-    .flower-box.rose {
-      background: var(--rose-soft);
-      border: 1px solid rgba(196, 93, 90, 0.25);
-    }
-
-    .flower-box.sunflower {
-      background: var(--sunflower-warm);
-      border: 1px solid rgba(229, 169, 59, 0.3);
-    }
-
-    .flower-box:hover {
-      transform: translateY(-3px) scale(1.02);
-      box-shadow: 0 10px 22px rgba(0,0,0,0.06);
-    }
-
-    .flower-box .f-icon {
-      font-size: 2.8rem;
-      display: block;
-      margin-bottom: 6px;
-    }
-
-    .flower-box .f-name {
-      font-size: 0.92rem;
-      font-weight: 600;
-      color: var(--text-dark);
-      display: block;
-    }
-
-    .flower-box .f-hint {
-      font-size: 0.76rem;
-      color: var(--text-muted);
-      margin-top: 4px;
-      display: block;
-    }
-
-    /* Village Greenery Walk */
-    .village-scene {
-      border-radius: 18px;
-      overflow: hidden;
-      height: 200px;
-      margin-bottom: 14px;
-      background: url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1000&q=80') center/cover no-repeat;
-      display: flex;
-      align-items: flex-end;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.1);
-    }
-
-    .village-overlay {
-      background: linear-gradient(to top, rgba(20, 36, 28, 0.9) 0%, rgba(20, 36, 28, 0.3) 70%, transparent 100%);
-      width: 100%;
-      padding: 18px;
-      color: #ffffff;
-    }
-
-    .village-overlay h3 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.4rem;
-    }
-
-    .village-overlay p {
-      font-size: 0.82rem;
-      opacity: 0.92;
-      font-weight: 300;
-    }
-
-    .nature-points {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-    }
-
-    @media (max-width: 500px) {
-      .nature-points {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .nature-point {
-      background: #fbfbf9;
-      border: 1px solid rgba(94, 131, 102, 0.2);
-      border-radius: 14px;
-      padding: 12px;
-      text-align: center;
-      cursor: pointer;
-      transition: all 0.25s ease;
-    }
-
-    .nature-point:hover {
-      background: var(--nature-soft-green);
-      transform: translateY(-2px);
-    }
-
-    .nature-point span {
-      display: block;
-      font-size: 0.82rem;
-      font-weight: 600;
-      color: var(--nature-forest);
-    }
-
-    /* Open When Letters */
-    .envelope-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-    }
-
-    @media (max-width: 500px) {
-      .envelope-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .envelope-card {
-      background: #fafaf7;
-      border: 1px solid var(--border-subtle);
-      border-radius: 16px;
-      padding: 16px;
-      cursor: pointer;
-      transition: all 0.25s ease;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .envelope-card:hover {
-      background: #ffffff;
-      transform: translateY(-2px);
-      box-shadow: var(--shadow-hover);
-      border-color: var(--nature-sage);
-    }
-
-    .envelope-icon {
-      width: 40px;
-      height: 40px;
-      background: #fff;
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.25rem;
-      box-shadow: 0 3px 8px rgba(0,0,0,0.04);
-      flex-shrink: 0;
-    }
-
-    .envelope-info h4 {
-      font-size: 0.84rem;
-      color: var(--text-dark);
-      font-weight: 600;
-      line-height: 1.3;
-      margin-bottom: 2px;
-    }
-
-    .envelope-info span {
-      font-size: 0.72rem;
-      color: var(--text-muted);
-    }
-
-    /* Promises & Growth Section */
-    .promise-list {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .promise-item {
-      background: #fbfbf9;
-      border-left: 3px solid var(--nature-sage);
-      border-radius: 0 14px 14px 0;
-      padding: 14px 16px;
-      transition: all 0.2s ease;
-    }
-
-    .promise-item:hover {
-      background: #f7f9f6;
-      border-left-color: var(--nature-forest);
-      transform: translateX(3px);
-    }
-
-    .promise-title {
-      font-size: 0.88rem;
-      font-weight: 600;
-      color: var(--nature-forest);
-      margin-bottom: 4px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .promise-body {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      line-height: 1.55;
-    }
-
-    /* Private Dynamic Scrapbook (Privacy Safeguard) */
-    .vault-box {
-      background: linear-gradient(135deg, #fefdfb, #f6f3ee);
-      border: 1px dashed rgba(94, 131, 102, 0.35);
-      border-radius: 20px;
-      padding: 22px;
-      text-align: center;
-    }
-
-    .vault-header {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.5rem;
-      color: var(--nature-forest);
-      margin-bottom: 6px;
-    }
-
-    .vault-desc {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      margin-bottom: 16px;
-      line-height: 1.5;
-    }
-
-    .privacy-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      background: #eef5ed;
-      color: #3b6644;
-      padding: 4px 12px;
-      border-radius: 20px;
-      font-size: 0.74rem;
-      font-weight: 600;
-      margin-bottom: 14px;
-    }
-
-    .upload-btn {
-      background: var(--nature-forest);
-      color: white;
-      border: none;
-      padding: 10px 22px;
-      border-radius: 25px;
-      font-size: 0.85rem;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      transition: all 0.2s;
-    }
-
-    .upload-btn:hover {
-      background: var(--nature-sage);
-    }
-
-    .polaroid-gallery {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
-      margin-top: 18px;
-    }
-
-    .polaroid-card {
-      background: #fff;
-      padding: 10px 10px 16px;
-      border-radius: 6px;
-      box-shadow: 0 6px 18px rgba(0,0,0,0.06);
-      transform: rotate(-1deg);
-      transition: all 0.3s ease;
-      position: relative;
-    }
-
-    .polaroid-card:nth-child(even) {
-      transform: rotate(1.5deg);
-    }
-
-    .polaroid-card:hover {
-      transform: rotate(0deg) scale(1.02);
-      box-shadow: 0 12px 28px rgba(0,0,0,0.12);
-    }
-
-    .polaroid-img-preview {
-      width: 100%;
-      height: 130px;
-      border-radius: 4px;
-      object-fit: cover;
-      background-color: #ede7df;
-      display: block;
-    }
-
-    .polaroid-cap {
-      font-family: 'Caveat', cursive;
-      font-size: 1.1rem;
-      color: #4a3e35;
-      text-align: center;
-      margin-top: 8px;
-    }
-
-    .remove-pic-btn {
-      position: absolute;
-      top: 4px;
-      right: 4px;
-      background: rgba(0,0,0,0.5);
-      color: white;
-      border: none;
-      border-radius: 50%;
-      width: 22px;
-      height: 22px;
-      font-size: 11px;
-      cursor: pointer;
-      display: none;
-    }
-
-    .polaroid-card:hover .remove-pic-btn {
-      display: block;
-    }
-
-    /* Golden Date Ticket */
-    .coupon-card {
-      background: linear-gradient(135deg, #fffcf7, #f7efe4);
-      border: 2px dashed var(--sunflower-gold);
-      border-radius: 22px;
-      padding: 26px 20px;
-      text-align: center;
-      position: relative;
-      margin-top: 25px;
-    }
-
-    .coupon-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.7rem;
-      color: #382c22;
-      margin-bottom: 8px;
-    }
-
-    .coupon-desc {
-      font-size: 0.88rem;
-      color: var(--text-muted);
-      max-width: 440px;
-      margin: 0 auto 16px;
-      line-height: 1.5;
-    }
-
-    .redeem-btn {
-      background: var(--nature-forest);
-      color: #fff;
-      border: none;
-      padding: 12px 28px;
-      border-radius: 30px;
-      font-size: 0.9rem;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.25s ease;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .redeem-btn:hover {
-      background: var(--nature-sage);
-      transform: scale(1.02);
-    }
-
-    .redeem-btn.redeemed {
-      background: #6d8d64;
-      pointer-events: none;
-    }
-
-    /* Modal System */
-    .modal-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: rgba(20, 31, 25, 0.65);
-      backdrop-filter: blur(8px);
-      z-index: 1000;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-      opacity: 0;
-      transition: opacity 0.3s ease;
-    }
-
-    .modal-overlay.active {
-      display: flex;
-      opacity: 1;
-    }
-
-    .modal-sheet {
-      background: #fffdfb;
-      max-width: 490px;
-      width: 100%;
-      border-radius: 24px;
-      padding: 32px 26px;
-      position: relative;
-      box-shadow: 0 25px 60px rgba(0,0,0,0.25);
-      transform: translateY(20px) scale(0.96);
-      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      border: 1px solid rgba(94, 131, 102, 0.2);
-      max-height: 85vh;
-      overflow-y: auto;
-    }
-
-    .modal-overlay.active .modal-sheet {
-      transform: translateY(0) scale(1);
-    }
-
-    .close-modal {
-      position: absolute;
-      top: 16px;
-      right: 16px;
-      background: var(--nature-soft-green);
-      border: none;
-      width: 30px;
-      height: 30px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      color: var(--nature-forest);
-      font-size: 1rem;
-    }
-
-    .modal-tag {
-      color: var(--nature-sage);
-      font-size: 0.76rem;
-      font-weight: 600;
-      letter-spacing: 0.5px;
-      text-transform: uppercase;
-      margin-bottom: 6px;
-    }
-
-    .modal-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.7rem;
-      color: var(--nature-forest);
-      margin-bottom: 14px;
-      line-height: 1.25;
-    }
-
-    .modal-body {
-      color: #3d3732;
-      font-size: 0.94rem;
-      line-height: 1.75;
-      white-space: pre-line;
-    }
-
-    .signature-area {
-      font-family: 'Caveat', cursive;
-      font-size: 1.45rem;
-      color: var(--nature-forest);
-      margin-top: 20px;
-      text-align: right;
-    }
-
-    footer {
-      text-align: center;
-      padding: 30px 10px 20px;
-      color: var(--text-muted);
-      font-size: 0.82rem;
-    }
-  </style>
+  <link rel="stylesheet" href="/src/style.css">
 </head>
 <body>
 
-  <!-- Nature Canvas -->
-  <canvas id="nature-canvas"></canvas>
-
-  <!-- Audio Pill -->
-  <div class="audio-pill" id="audioToggle" onclick="toggleNatureAudio()">
-    <span class="leaf-disc">🍃</span>
-    <span id="audioStatus">Play Nature Ambience</span>
+  <!-- Loading Screen -->
+  <div id="loader">
+    <div class="loader-spinner"></div>
+    <div class="loader-title">The Mountain Sanctuary</div>
+    <div class="loader-subtitle">Crafting the peaks, morning sun & tea for Tama...</div>
   </div>
 
-  <div class="container">
+  <!-- 3D WebGL Canvas -->
+  <canvas id="webgl-canvas"></canvas>
 
-    <!-- Header -->
-    <header>
-      <div class="name-badge">🌿 To Aysha Siddiquea Tamanna (My Tama)</div>
-      <h1>Happy Birthday, Tama</h1>
-      <span class="sub-name">The tender flower of Abu Bakkar Siddique & Rina Akter</span>
-      <p class="hero-subtitle">
-        I know how loud the world feels right now, how heavily your loving heart carries everything, and how deeply you care for your family.
-        Here is a private sanctuary of green calm, hot dudh cha, and unconditional reassurance made just for you.
-      </p>
-    </header>
-
-    <!-- Calming Grounding Box -->
-    <div class="breathe-card">
-      <div class="breathe-circle">
-        <span>🌻</span>
+  <!-- Cinematic HUD Layer -->
+  <div class="hud-layer">
+    <div class="hud-top">
+      <div class="brand-pill">
+        <span class="brand-dot"></span>
+        <span>Aysha's Sanctuary</span>
       </div>
-      <p class="breathe-text">Pause for ten seconds, Tama. Take a deep, slow breath. You are safe, your efforts are seen, and you are not fighting alone.</p>
+      <div class="hud-actions">
+        <button class="hud-btn" id="audioBtn" onclick="window.toggleAudio()">
+          <span id="audioIcon">🍃</span>
+          <span id="audioLabel">Ambience</span>
+        </button>
+      </div>
     </div>
+  </div>
 
-    <!-- Section 1: Hot Dudh Cha (Her favorite!) -->
-    <section class="cozy-card">
-      <div class="section-title">
-        <span>☕</span>
-        <h2>A Steaming Cup of Dudh Cha</h2>
-      </div>
-      <p class="section-desc">Rich, hot milk tea brewed with cardamom aroma—just the way you like it:</p>
+  <!-- Floating Time Scrubbing Controller -->
+  <div class="time-pill">
+    <span>☀️ Dawn</span>
+    <input type="range" id="timeSlider" class="time-slider" min="0" max="1" step="0.001" value="0.1">
+    <span>🌙 Night</span>
+  </div>
 
-      <div class="cha-banner">
-        <div class="cha-cup">☕</div>
-        <div class="cha-quote">"Whenever your mind spins with worry, imagine sitting together on a quiet afternoon with two clay cups of hot dudh cha, watching the rain wash away every doubt."</div>
-        <div class="cha-note">Brewed to melt away every ounce of overthinking 🤍</div>
-      </div>
-    </section>
+  <!-- Smooth Scroll Journey Track -->
+  <div class="scroll-container" id="scrollTrack">
 
-    <!-- Section 2: Rose & Sunflower (Her Favorite Blooms) -->
-    <section class="cozy-card">
-      <div class="section-title">
-        <span>🌹</span>
-        <h2>Your Roses & Sunflowers</h2>
-      </div>
-      <p class="section-desc">The two flowers that mirror who you are to me:</p>
-
-      <div class="flower-duo">
-        <div class="flower-box rose" onclick="openFlowerNote('rose')">
-          <span class="f-icon">🌹</span>
-          <span class="f-name">The Delicate Rose</span>
-          <span class="f-hint">Tap for your truth</span>
-        </div>
-
-        <div class="flower-box sunflower" onclick="openFlowerNote('sunflower')">
-          <span class="f-icon">🌻</span>
-          <span class="f-name">The Golden Sunflower</span>
-          <span class="f-hint">Tap for your light</span>
-        </div>
-      </div>
-    </section>
-
-    <!-- Section 3: Village Greenery & Peaceful Scenery Walk -->
-    <section class="cozy-card">
-      <div class="section-title">
-        <span>🏡</span>
-        <h2>Our Village Greenery Sanctuary</h2>
-      </div>
-      <p class="section-desc">Lush trees, fresh rain, and green open fields where nobody can disturb your peace:</p>
-
-      <div class="village-scene">
-        <div class="village-overlay">
-          <h3>Emerald Pathways & Whispering Banyan Trees</h3>
-          <p>Where the air smells like fresh rain on leaves and there are no worries in sight.</p>
-        </div>
-      </div>
-
-      <div class="nature-points">
-        <div class="nature-point" onclick="openVillageMoment('trees')">
-          <span>🌳 Ancient Trees</span>
-        </div>
-        <div class="nature-point" onclick="openVillageMoment('rain')">
-          <span>🌧️ Village Rain & Soil</span>
-        </div>
-        <div class="nature-point" onclick="openVillageMoment('fields')">
-          <span>🌾 Open Green Fields</span>
-        </div>
-      </div>
-    </section>
-
-    <!-- Section 4: Letters For Her Tender Heart -->
-    <section class="cozy-card">
-      <div class="section-title">
-        <span>💌</span>
-        <h2>Open When You Need Me Most</h2>
-      </div>
-      <p class="section-desc">Whenever thoughts get too heavy, tap the letter you need:</p>
-
-      <div class="envelope-grid">
-        <div class="envelope-card" onclick="openLetter('birthday')">
-          <div class="envelope-icon">🎂</div>
-          <div class="envelope-info">
-            <h4>Your Birthday Letter</h4>
-            <span>To my patient sunflower</span>
-          </div>
-        </div>
-
-        <div class="envelope-card" onclick="openLetter('family')">
-          <div class="envelope-icon">🏡</div>
-          <div class="envelope-info">
-            <h4>For Your Loving Family</h4>
-            <span>Honoring Abu Bakkar uncle & Rina aunty</span>
-          </div>
-        </div>
-
-        <div class="envelope-card" onclick="openLetter('overthinking')">
-          <div class="envelope-icon">💭</div>
-          <div class="envelope-info">
-            <h4>When You Overthink Us</h4>
-            <span>Clear truth against every doubt</span>
-          </div>
-        </div>
-
-        <div class="envelope-card" onclick="openLetter('marriage')">
-          <div class="envelope-icon">💍</div>
-          <div class="envelope-info">
-            <h4>Our Future & Marriage</h4>
-            <span>The dream we are building</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Section 5: My Sincere Promises & Growth (Anger & Routine) -->
-    <section class="cozy-card">
-      <div class="section-title">
-        <span>🌱</span>
-        <h2>What I Am Fixing For You</h2>
-      </div>
-      <p class="section-desc">You shouldn't have to carry the burden alone while tolerating my flaws. Here is my word to you:</p>
-
-      <div class="promise-list">
-        <div class="promise-item">
-          <div class="promise-title">
-            <span>🛡️</span>
-            <span>Mastering My Anger</span>
-          </div>
-          <div class="promise-body">
-            I know my anger hurts your gentle heart, even when you patiently tolerate it. You deserve gentleness, patience, and warmth, not sharp words. I am actively learning to pause, breathe, and protect your peace instead of reacting.
-          </div>
-        </div>
-
-        <div class="promise-item">
-          <div class="promise-title">
-            <span>⏰</span>
-            <span>Disciplining My Daily Routine</span>
-          </div>
-          <div class="promise-body">
-            I know you worry about my disorganized routine and health. I want to be the responsible, dependable man your parents can proudly trust. I am fixing my schedule, sleep, and habits every single day so you can feel secure.
-          </div>
-        </div>
-
-        <div class="promise-item">
-          <div class="promise-title">
-            <span>🤝</span>
-            <span>Standing Beside You With Your Family</span>
-          </div>
-          <div class="promise-body">
-            You will never be left alone to convince your parents. We will approach them with absolute respect, honesty, and honor, proving through our actions that our intentions are pure.
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Section 6: Private Dynamic Photo Vault (100% Client-Side Privacy) -->
-    <section class="cozy-card">
-      <div class="section-title">
-        <span>📸</span>
-        <h2>Our Private Memory Vault</h2>
-      </div>
-      <p class="section-desc">Your photos stay 100% private on your own device—never uploaded to any public server:</p>
-
-      <div class="vault-box">
-        <div class="privacy-badge">🔒 Private & Secure (Saved Only On Your Phone)</div>
-        <h4 class="vault-header">Our Quiet Hangout Memories</h4>
-        <p class="vault-desc">
-          Add our favorite pictures here right from your phone. They stay safely stored on your device only!
+    <!-- Act 1: The Mountain Vista -->
+    <section class="story-section" id="section-1">
+      <div class="story-card">
+        <span class="story-badge">Act I • The Haven</span>
+        <span class="story-bengali-tag">শান্ত পাহাড়ের ভোর 🏔️</span>
+        <h2 class="story-title">Above The Loud World</h2>
+        <p class="story-text">
+          Happy Birthday, my sweet Tama. I know how heavily your tender heart carries everything, and how loud the world has been lately.
+          Here, high among the quiet mountains, the air is clean, the breeze is gentle, and your mind is completely safe.
         </p>
-        
-        <label class="upload-btn">
-          <span>📁 Add Our Photos</span>
-          <input type="file" id="photoInput" accept="image/*" multiple style="display:none;" onchange="handlePhotoUpload(event)">
-        </label>
-
-        <div class="polaroid-gallery" id="polaroidGallery">
-          <!-- Default cozy illustrations until photos are added -->
-          <div class="polaroid-card">
-            <img class="polaroid-img-preview" src="https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=600&q=80" alt="Tea">
-            <div class="polaroid-cap">Hot dudh cha & your soft laugh</div>
-          </div>
-          <div class="polaroid-card">
-            <img class="polaroid-img-preview" src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=600&q=80" alt="Village">
-            <div class="polaroid-cap">Green village paths with you</div>
-          </div>
+        <div class="action-row">
+          <span style="font-size: 0.8rem; color: #a1ada5;">↓ Scroll gently with your thumb to step into the mountains</span>
         </div>
       </div>
     </section>
 
-    <!-- Section 7: The Halal Future Date Pass -->
-    <div class="coupon-card">
-      <h3 class="coupon-title">The "Forever By Your Side" Pass</h3>
-      <p class="coupon-desc">
-        Good for: A peaceful life together, drinking hot dudh cha every morning, planting trees and sunflowers, honoring our families, and choosing each other every single day.
-      </p>
-      <button class="redeem-btn" id="redeemBtn" onclick="redeemCoupon()">
-        <span>💍</span>
-        <span id="couponText">Claim This Promise</span>
-      </button>
-    </div>
+    <!-- Act 2: The Garden of Blooms -->
+    <section class="story-section align-right" id="section-2">
+      <div class="story-card">
+        <span class="story-badge">Act II • Her Blooms</span>
+        <span class="story-bengali-tag">গোলাপ আর সূর্যমুখী 🌻🌹</span>
+        <h2 class="story-title">A Garden For You</h2>
+        <p class="story-text">
+          Around our solitary mountain house grows a garden of your two favorite blooms: velvety <strong>Roses</strong> that mirror your delicate gentleness, and golden <strong>Sunflowers</strong> that remind me how you always turn toward the light.
+        </p>
+        <div class="action-row">
+          <button class="action-btn" onclick="window.openFlowerDialog()">
+            <span>🌸</span>
+            <span>Read Flower Whispers</span>
+          </button>
+        </div>
+      </div>
+    </section>
 
-    <footer>
-      Crafted with infinite respect and love for Aysha Siddiquea Tamanna (Tama). Happy Birthday! 🌿🤍
-    </footer>
+    <!-- Act 3: The Veranda & Dudh Cha -->
+    <section class="story-section" id="section-3">
+      <div class="story-card">
+        <span class="story-badge">Act III • The Veranda</span>
+        <span class="story-bengali-tag">গরম দুধ চা ও বৃষ্টি ☕</span>
+        <h2 class="story-title">A Steaming Cup of Dudh Cha</h2>
+        <p class="story-text">
+          On the wooden porch table, a steaming clay cup of hot milk tea is freshly brewed with cardamom aroma.
+          Whenever your thoughts start to race, close your eyes, take a slow breath, and imagine us sitting here watching the mountain rain together.
+        </p>
+        <div class="action-row">
+          <button class="action-btn" onclick="window.openChaDialog()">
+            <span>☕</span>
+            <span>Take A Sip of Peace</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Act 4: Golden Sunset to Starry Night -->
+    <section class="story-section align-right" id="section-4">
+      <div class="story-card">
+        <span class="story-badge">Act IV • Sunset to Starlight</span>
+        <span class="story-bengali-tag">ঘরের স্নিগ্ধ আলো ও চাঁদ 🌙</span>
+        <h2 class="story-title">When Night Falls</h2>
+        <p class="story-text">
+          As the golden sun slips beneath the mountain ridge, the moon rises and the cottage windows illuminate with warm amber light.
+          Darkness isn't scary when you have a home that will never let you freeze.
+        </p>
+      </div>
+    </section>
+
+    <!-- Act 5: The Halal Promise & Family Honor -->
+    <section class="story-section align-center" id="section-5">
+      <div class="story-card" style="max-width: 580px;">
+        <span class="story-badge">Act V • Eternal Promise</span>
+        <span class="story-bengali-tag">আবু বক্কর সিদ্দিক ও রীনা আক্তারের আদরের তামা 🤍</span>
+        <h2 class="story-title">My Word To You</h2>
+        <p class="story-text">
+          Your love for your parents is one of the things I cherish most. We will honor Abu Bakkar uncle and Rina aunty with patience, character, and respect.
+          And for you: I am actively mastering my temper and disciplining my daily routine so you never have to carry fear or uncertainty.
+        </p>
+        <div class="action-row" style="justify-content: center;">
+          <button class="action-btn" onclick="window.openLetterDialog('family')">
+            <span>🏡</span>
+            <span>Honoring Your Family</span>
+          </button>
+          <button class="action-btn" onclick="window.openLetterDialog('vows')">
+            <span>🛡️</span>
+            <span>My Promises To You</span>
+          </button>
+          <button class="action-btn" onclick="window.openLetterDialog('marriage')">
+            <span>💍</span>
+            <span>Our Halal Dream</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Act 6: Private Photo Scrapbook -->
+    <section class="story-section align-center" id="section-6" style="min-height: 80vh;">
+      <div class="story-card" style="max-width: 540px;">
+        <span class="story-badge">Act VI • Private Memory Vault</span>
+        <span class="story-bengali-tag">আমাদের গোপন স্মৃতির খাম 🔒</span>
+        <h2 class="story-title">Our Private Keepsake</h2>
+        <p class="story-text">
+          Because your privacy is sacred, your photos stay 100% on your own device—never sent to any server.
+          Upload your favorite moments here to make this mountain sanctuary truly ours.
+        </p>
+        <div class="action-row" style="justify-content: center;">
+          <button class="action-btn" onclick="window.openVaultDialog()">
+            <span>📸</span>
+            <span>Open Private Vault</span>
+          </button>
+        </div>
+      </div>
+    </section>
 
   </div>
 
-  <!-- Interactive Modal Sheet -->
-  <div class="modal-overlay" id="letterModal" onclick="closeModalOnBackdrop(event)">
-    <div class="modal-sheet">
-      <button class="close-modal" onclick="closeModal()">✕</button>
+  <!-- Interactive Modal Dialog -->
+  <div class="modal-overlay" id="modalOverlay" onclick="window.closeModalOnBackdrop(event)">
+    <div class="modal-dialog">
+      <button class="modal-close" onclick="window.closeModal()">✕</button>
       <div class="modal-tag" id="modalTag">Letter</div>
       <h3 class="modal-title" id="modalTitle">Letter Title</h3>
       <div class="modal-body" id="modalBody"></div>
-      <div class="signature-area">Forever in your corner,<br>With all my love & respect 🤍</div>
+      <div class="modal-signature">With all my love & respect,<br>Forever Your Safe Place 🤍🏔️</div>
     </div>
   </div>
 
-  <script>
-    /* ==========================================================================
-       1. Falling Green Leaves & Golden Sunflower Petals Canvas
-       ========================================================================== */
-    const canvas = document.getElementById('nature-canvas');
-    const ctx = canvas.getContext('2d');
-    let width = canvas.width = window.innerWidth;
-    let height = canvas.height = window.innerHeight;
-
-    window.addEventListener('resize', () => {
-      width = canvas.width = window.innerWidth;
-      height = canvas.height = window.innerHeight;
-    });
-
-    const particles = [];
-    const count = 30;
-
-    for (let i = 0; i < count; i++) {
-      const isLeaf = Math.random() > 0.45;
-      particles.push({
-        x: Math.random() * width,
-        y: Math.random() * height,
-        size: Math.random() * 8 + 6,
-        speedX: Math.random() * 1.1 - 0.55,
-        speedY: Math.random() * 0.85 + 0.4,
-        angle: Math.random() * 360,
-        spin: Math.random() * 0.02 - 0.01,
-        isLeaf: isLeaf,
-        color: isLeaf 
-          ? ['rgba(94, 131, 102, 0.45)', 'rgba(128, 163, 134, 0.4)', 'rgba(65, 102, 72, 0.35)'][Math.floor(Math.random() * 3)]
-          : ['rgba(229, 169, 59, 0.45)', 'rgba(214, 135, 132, 0.4)', 'rgba(255, 230, 160, 0.5)'][Math.floor(Math.random() * 3)]
-      });
-    }
-
-    function render() {
-      ctx.clearRect(0, 0, width, height);
-
-      particles.forEach(p => {
-        p.x += p.speedX;
-        p.y += p.speedY;
-        p.angle += p.spin;
-
-        if (p.y > height) {
-          p.y = -12;
-          p.x = Math.random() * width;
-        }
-        if (p.x > width) p.x = 0;
-        if (p.x < 0) p.x = width;
-
-        ctx.save();
-        ctx.translate(p.x, p.y);
-        ctx.rotate(p.angle);
-        ctx.fillStyle = p.color;
-
-        ctx.beginPath();
-        if (p.isLeaf) {
-          ctx.moveTo(0, -p.size);
-          ctx.quadraticCurveTo(p.size * 0.7, 0, 0, p.size);
-          ctx.quadraticCurveTo(-p.size * 0.7, 0, 0, -p.size);
-        } else {
-          ctx.ellipse(0, 0, p.size, p.size * 0.55, 0, 0, Math.PI * 2);
-        }
-        ctx.fill();
-        ctx.restore();
-      });
-
-      requestAnimationFrame(render);
-    }
-    render();
-
-    /* ==========================================================================
-       2. Flower Notes (Rose & Sunflower)
-       ========================================================================== */
-    function openFlowerNote(type) {
-      if (type === 'rose') {
-        openModal(
-          "For My Sweet Rose 🌹",
-          "Soft, Delicate, and Beautiful",
-          `A rose is delicate. Its petals feel every rough wind, and you cannot handle a rose with harsh hands—it deserves to be cared for with gentle tenderness.
-
-That is who you are, Tama. You have the softest heart, and it hurts easily because you feel everything with total sincerity. I never want to be the sharp thorn or harsh wind in your life. I want to be the shelter that protects your delicate beauty.`
-        );
-      } else {
-        openModal(
-          "For My Bright Sunflower 🌻",
-          "Always Turning Toward Light",
-          `A sunflower never looks into the darkness. Even on gloomy days, it patiently turns its face toward the light.
-
-In this difficult time, when you are trying so hard to convince your family and carrying so much worry, remember: you are the sunflower. Your purity and loyalty will bring the sunshine through these cloudy days. I believe in you, Tama.`
-        );
-      }
-    }
-
-    /* ==========================================================================
-       3. Village Moments
-       ========================================================================== */
-    const villageMoments = {
-      trees: {
-        tag: "Village Greenery 🌳",
-        title: "Deep Roots Against Heavy Winds",
-        content: `Think of the tall banyan trees in a green village. Storms and winds come, but their roots go so deep into the earth that nothing can uproot them.
-
-Our relationship and our goal of marriage are rooted in pure intentions. Misunderstandings are like seasonal winds—they blow loud, but they pass. Hold on to my hand, and let our roots stay firm.`
-      },
-      rain: {
-        tag: "Village Rain 🌧️",
-        title: "The Clean Smell of Wet Earth",
-        content: `When heavy rain pours over village leaves, it cleans away all the dust and makes the greenery ten times brighter.
-
-These tears and difficulties are washing away the obstacles. It hurts right now, but on the other side of this rain is the peaceful life and the family acceptance we are praying for.`
-      },
-      fields: {
-        tag: "Open Greenery 🌾",
-        title: "Peace Away From the Chaos",
-        content: `Close your eyes for five seconds, Tama.
-
-Imagine us walking along a quiet village pathway, surrounded by lush green paddies, cool wind touching your cheeks, holding a hot cup of dudh cha, smiling because everything finally fell into place. We will reach that day.`
-      }
-    };
-
-    function openVillageMoment(key) {
-      const data = villageMoments[key];
-      openModal(data.tag, data.title, data.content);
-    }
-
-    /* ==========================================================================
-       4. Heart Letters
-       ========================================================================== */
-    const letters = {
-      birthday: {
-        tag: "Midnight Birthday Letter 🎂",
-        title: "Happy Birthday, My Beloved Tama",
-        content: `Happy Birthday to the most soft-hearted, precious person in my life—Aysha Siddiquea Tamanna.
-
-I know this birthday comes at a time when your mind is filled with tension, uncertainty, and constant overthinking. I see how hard you are trying. I see the quiet tears you hide.
-
-I want you to know how immensely proud I am of you. You are the daughter of Abu Bakkar Siddique uncle and Rina Akter aunty, raised with love and values, and your loyalty to your family is one of the things I respect most about you.
-
-Today, set your worries aside for just a few moments. Drink your favorite dudh cha, look at the greenery outside, and know that you are loved unconditionally.`
-      },
-      family: {
-        tag: "Respecting Your Parents 🏡",
-        title: "To Abu Bakkar Uncle & Rina Aunty's Precious Daughter",
-        content: `Tama, never feel guilty for loving your parents so fiercely. 
-
-Uncle Abu Bakkar Siddique and Aunty Rina Akter only want to protect you. Any parent who hears wrong or negative info about someone would react with caution. Their concern is out of pure love for you.
-
-We will never ask you to disrespect them or hurt them. My family wants to meet them with open arms, humility, and honor. Through patience, time, and honest character, we will clear every misunderstanding. You will not have to choose between your family and me—we will win their blessings together.`
-      },
-      overthinking: {
-        tag: "When Your Thoughts Spin 💭",
-        title: "Clear Truth For Your Racing Mind",
-        content: `When your mind starts running through endless "what ifs" at 2 AM, read this slowly:
-
-1. You did not do anything wrong. You are doing everything humanly possible.
-2. I am not angry, tired, or giving up on you.
-3. Every single mistake or anger issue of mine is being corrected because you deserve peace.
-4. Allah sees our pure intention for marriage, and what is meant for us in goodness will find its way.
-
-Exhale, Tama. Rest your heart.`
-      },
-      marriage: {
-        tag: "The Halal Dream 💍",
-        title: "The Home We Are Building Together",
-        content: `The end goal of every struggle we are facing right now is one thing: a peaceful, blessed marriage with both our families standing beside us smiling.
-
-A home where mornings start with hot dudh cha, rooms filled with plants and flowers, and days built on patience, respect, and calm communication. 
-
-We will get there. Keep convincing them with gentle love, and let me prove through my character that you chose the right man.`
-      }
-    };
-
-    function openLetter(key) {
-      const data = letters[key];
-      openModal(data.tag, data.title, data.content);
-    }
-
-    function openModal(tag, title, content) {
-      document.getElementById('modalTag').innerText = tag;
-      document.getElementById('modalTitle').innerText = title;
-      document.getElementById('modalBody').innerText = content;
-      document.getElementById('letterModal').classList.add('active');
-    }
-
-    function closeModal() {
-      document.getElementById('letterModal').classList.remove('active');
-    }
-
-    function closeModalOnBackdrop(e) {
-      if (e.target.id === 'letterModal') {
-        closeModal();
-      }
-    }
-
-    /* ==========================================================================
-       5. Client-Side Dynamic Photo Vault (Zero server uploads - 100% Private)
-       ========================================================================== */
-    function loadSavedPhotos() {
-      const saved = localStorage.getItem('tama_private_photos');
-      if (saved) {
-        try {
-          const photos = JSON.parse(saved);
-          if (photos.length > 0) {
-            const gallery = document.getElementById('polaroidGallery');
-            gallery.innerHTML = '';
-            photos.forEach((src, idx) => {
-              renderPhotoCard(src, idx);
-            });
-          }
-        } catch (e) {
-          console.error(e);
-        }
-      }
-    }
-
-    function renderPhotoCard(src, idx) {
-      const gallery = document.getElementById('polaroidGallery');
-      const card = document.createElement('div');
-      card.className = 'polaroid-card';
-      card.innerHTML = `
-        <button class="remove-pic-btn" onclick="removePhoto(${idx})">✕</button>
-        <img class="polaroid-img-preview" src="${src}" alt="Our Moment">
-        <div class="polaroid-cap">Our precious hangout 🤍</div>
-      `;
-      gallery.appendChild(card);
-    }
-
-    function handlePhotoUpload(e) {
-      const files = Array.from(e.target.files);
-      if (!files.length) return;
-
-      let saved = [];
-      try {
-        saved = JSON.parse(localStorage.getItem('tama_private_photos') || '[]');
-      } catch (e) { saved = []; }
-
-      files.forEach(file => {
-        const reader = new FileReader();
-        reader.onload = (event) => {
-          saved.push(event.target.result);
-          localStorage.setItem('tama_private_photos', JSON.stringify(saved));
-          loadSavedPhotos();
-        };
-        reader.readAsDataURL(file);
-      });
-    }
-
-    function removePhoto(idx) {
-      let saved = JSON.parse(localStorage.getItem('tama_private_photos') || '[]');
-      saved.splice(idx, 1);
-      localStorage.setItem('tama_private_photos', JSON.stringify(saved));
-      if (saved.length === 0) {
-        location.reload();
-      } else {
-        loadSavedPhotos();
-      }
-    }
-
-    // Load any existing local photos on page open
-    loadSavedPhotos();
-
-    /* ==========================================================================
-       6. Redeem Promise
-       ========================================================================== */
-    function redeemCoupon() {
-      const btn = document.getElementById('redeemBtn');
-      const text = document.getElementById('couponText');
-      btn.classList.add('redeemed');
-      text.innerText = "Promise Sealed In My Heart 🤍";
-
-      openModal(
-        "A Solemn Promise 💍",
-        "To Aysha Siddiquea Tamanna",
-        `This is my vow to you on your birthday:
-
-I will work on my anger every single day so you never feel unsafe.
-I will discipline my routine so you never have to worry about my future.
-We will honor your parents, Abu Bakkar uncle and Rina aunty, and win their heart with respect.
-
-Happy Birthday, Tama. You are worth every effort.`
-      );
-    }
-
-    /* ==========================================================================
-       7. Gentle Nature Audio Synthesis
-       ========================================================================== */
-    let audioCtx = null;
-    let isPlaying = false;
-    let musicInterval = null;
-
-    const chords = [
-      [261.63, 329.63, 392.00, 523.25], // C Major
-      [220.00, 261.63, 329.63, 440.00], // A Minor
-      [174.61, 220.00, 261.63, 349.23], // F Major
-      [196.00, 246.94, 293.66, 392.00]  // G Major
-    ];
-    let chordIdx = 0;
-
-    function playChord() {
-      if (!audioCtx || !isPlaying) return;
-      const notes = chords[chordIdx];
-      chordIdx = (chordIdx + 1) % chords.length;
-
-      notes.forEach((freq, i) => {
-        setTimeout(() => {
-          if (!isPlaying) return;
-          const osc = audioCtx.createOscillator();
-          const gain = audioCtx.createGain();
-
-          osc.type = 'sine';
-          osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-
-          gain.gain.setValueAtTime(0.001, audioCtx.currentTime);
-          gain.gain.exponentialRampToValueAtTime(0.035, audioCtx.currentTime + 1.2);
-          gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 4.5);
-
-          osc.connect(gain);
-          gain.connect(audioCtx.destination);
-
-          osc.start();
-          osc.stop(audioCtx.currentTime + 4.8);
-        }, i * 260);
-      });
-    }
-
-    function toggleNatureAudio() {
-      if (!audioCtx) {
-        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-      }
-
-      const pill = document.getElementById('audioToggle');
-      const status = document.getElementById('audioStatus');
-
-      if (!isPlaying) {
-        if (audioCtx.state === 'suspended') {
-          audioCtx.resume();
-        }
-        isPlaying = true;
-        pill.classList.add('playing');
-        status.innerText = "Ambience Playing 🎶";
-        playChord();
-        musicInterval = setInterval(playChord, 5200);
-      } else {
-        isPlaying = false;
-        pill.classList.remove('playing');
-        status.innerText = "Play Nature Ambience";
-        clearInterval(musicInterval);
-      }
-    }
-  </script>
+  <script type="module" src="/src/main.js"></script>
 </body>
 </html>

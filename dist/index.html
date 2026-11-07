@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Aysha's Mountain Sanctuary 🏔️ Happy Birthday Tama</title>
+  
+  <meta property="og:title" content="Happy Birthday, Tama 🌿🌻">
+  <meta property="og:description" content="A real-time 3D mountain haven with morning mist, golden sunsets, hot dudh cha, and starry night skies crafted for Aysha Siddiquea Tamanna.">
+  <meta property="og:type" content="website">
+  <meta name="theme-color" content="#0a0e11">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+  <script type="module" crossorigin src="/assets/index-EjygiMl0.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/index-oLth3rAI.css">
+</head>
+<body>
+
+  <!-- Loading Screen -->
+  <div id="loader">
+    <div class="loader-spinner"></div>
+    <div class="loader-title">The Mountain Sanctuary</div>
+    <div class="loader-subtitle">Crafting the peaks, morning sun & tea for Tama...</div>
+  </div>
+
+  <!-- 3D WebGL Canvas -->
+  <canvas id="webgl-canvas"></canvas>
+
+  <!-- Cinematic HUD Layer -->
+  <div class="hud-layer">
+    <div class="hud-top">
+      <div class="brand-pill">
+        <span class="brand-dot"></span>
+        <span>Aysha's Sanctuary</span>
+      </div>
+      <div class="hud-actions">
+        <button class="hud-btn" id="audioBtn" onclick="window.toggleAudio()">
+          <span id="audioIcon">🍃</span>
+          <span id="audioLabel">Ambience</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Floating Time Scrubbing Controller -->
+  <div class="time-pill">
+    <span>☀️ Dawn</span>
+    <input type="range" id="timeSlider" class="time-slider" min="0" max="1" step="0.001" value="0.1">
+    <span>🌙 Night</span>
+  </div>
+
+  <!-- Smooth Scroll Journey Track -->
+  <div class="scroll-container" id="scrollTrack">
+
+    <!-- Act 1: The Mountain Vista -->
+    <section class="story-section" id="section-1">
+      <div class="story-card">
+        <span class="story-badge">Act I • The Haven</span>
+        <span class="story-bengali-tag">শান্ত পাহাড়ের ভোর 🏔️</span>
+        <h2 class="story-title">Above The Loud World</h2>
+        <p class="story-text">
+          Happy Birthday, my sweet Tama. I know how heavily your tender heart carries everything, and how loud the world has been lately.
+          Here, high among the quiet mountains, the air is clean, the breeze is gentle, and your mind is completely safe.
+        </p>
+        <div class="action-row">
+          <span style="font-size: 0.8rem; color: #a1ada5;">↓ Scroll gently with your thumb to step into the mountains</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Act 2: The Garden of Blooms -->
+    <section class="story-section align-right" id="section-2">
+      <div class="story-card">
+        <span class="story-badge">Act II • Her Blooms</span>
+        <span class="story-bengali-tag">গোলাপ আর সূর্যমুখী 🌻🌹</span>
+        <h2 class="story-title">A Garden For You</h2>
+        <p class="story-text">
+          Around our solitary mountain house grows a garden of your two favorite blooms: velvety <strong>Roses</strong> that mirror your delicate gentleness, and golden <strong>Sunflowers</strong> that remind me how you always turn toward the light.
+        </p>
+        <div class="action-row">
+          <button class="action-btn" onclick="window.openFlowerDialog()">
+            <span>🌸</span>
+            <span>Read Flower Whispers</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Act 3: The Veranda & Dudh Cha -->
+    <section class="story-section" id="section-3">
+      <div class="story-card">
+        <span class="story-badge">Act III • The Veranda</span>
+        <span class="story-bengali-tag">গরম দুধ চা ও বৃষ্টি ☕</span>
+        <h2 class="story-title">A Steaming Cup of Dudh Cha</h2>
+        <p class="story-text">
+          On the wooden porch table, a steaming clay cup of hot milk tea is freshly brewed with cardamom aroma.
+          Whenever your thoughts start to race, close your eyes, take a slow breath, and imagine us sitting here watching the mountain rain together.
+        </p>
+        <div class="action-row">
+          <button class="action-btn" onclick="window.openChaDialog()">
+            <span>☕</span>
+            <span>Take A Sip of Peace</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Act 4: Golden Sunset to Starry Night -->
+    <section class="story-section align-right" id="section-4">
+      <div class="story-card">
+        <span class="story-badge">Act IV • Sunset to Starlight</span>
+        <span class="story-bengali-tag">ঘরের স্নিগ্ধ আলো ও চাঁদ 🌙</span>
+        <h2 class="story-title">When Night Falls</h2>
+        <p class="story-text">
+          As the golden sun slips beneath the mountain ridge, the moon rises and the cottage windows illuminate with warm amber light.
+          Darkness isn't scary when you have a home that will never let you freeze.
+        </p>
+      </div>
+    </section>
+
+    <!-- Act 5: The Halal Promise & Family Honor -->
+    <section class="story-section align-center" id="section-5">
+      <div class="story-card" style="max-width: 580px;">
+        <span class="story-badge">Act V • Eternal Promise</span>
+        <span class="story-bengali-tag">আবু বক্কর সিদ্দিক ও রীনা আক্তারের আদরের তামা 🤍</span>
+        <h2 class="story-title">My Word To You</h2>
+        <p class="story-text">
+          Your love for your parents is one of the things I cherish most. We will honor Abu Bakkar uncle and Rina aunty with patience, character, and respect.
+          And for you: I am actively mastering my temper and disciplining my daily routine so you never have to carry fear or uncertainty.
+        </p>
+        <div class="action-row" style="justify-content: center;">
+          <button class="action-btn" onclick="window.openLetterDialog('family')">
+            <span>🏡</span>
+            <span>Honoring Your Family</span>
+          </button>
+          <button class="action-btn" onclick="window.openLetterDialog('vows')">
+            <span>🛡️</span>
+            <span>My Promises To You</span>
+          </button>
+          <button class="action-btn" onclick="window.openLetterDialog('marriage')">
+            <span>💍</span>
+            <span>Our Halal Dream</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Act 6: Private Photo Scrapbook -->
+    <section class="story-section align-center" id="section-6" style="min-height: 80vh;">
+      <div class="story-card" style="max-width: 540px;">
+        <span class="story-badge">Act VI • Private Memory Vault</span>
+        <span class="story-bengali-tag">আমাদের গোপন স্মৃতির খাম 🔒</span>
+        <h2 class="story-title">Our Private Keepsake</h2>
+        <p class="story-text">
+          Because your privacy is sacred, your photos stay 100% on your own device—never sent to any server.
+          Upload your favorite moments here to make this mountain sanctuary truly ours.
+        </p>
+        <div class="action-row" style="justify-content: center;">
+          <button class="action-btn" onclick="window.openVaultDialog()">
+            <span>📸</span>
+            <span>Open Private Vault</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Interactive Modal Dialog -->
+  <div class="modal-overlay" id="modalOverlay" onclick="window.closeModalOnBackdrop(event)">
+    <div class="modal-dialog">
+      <button class="modal-close" onclick="window.closeModal()">✕</button>
+      <div class="modal-tag" id="modalTag">Letter</div>
+      <h3 class="modal-title" id="modalTitle">Letter Title</h3>
+      <div class="modal-body" id="modalBody"></div>
+      <div class="modal-signature">With all my love & respect,<br>Forever Your Safe Place 🤍🏔️</div>
+    </div>
+  </div>
+
+</body>
+</html>

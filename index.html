@@ -1,0 +1,1360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>A Quiet Village Haven for You 🌿🌸 Happy Birthday</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600&family=Caveat:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-cream: #f9f7f2;
+      --bg-card: #ffffff;
+      --nature-forest: #2d4a3e;
+      --nature-sage: #6b8f71;
+      --nature-soft-green: #eaf2e8;
+      --nature-earth: #8c6d58;
+      --primary-rose: #d68784;
+      --primary-blush: #faeee9;
+      --accent-honey: #dfa04e;
+      --text-dark: #292e2b;
+      --text-muted: #69736c;
+      --border-subtle: rgba(107, 143, 113, 0.18);
+      --shadow-cozy: 0 10px 30px -8px rgba(45, 74, 62, 0.08);
+      --shadow-hover: 0 16px 36px -6px rgba(45, 74, 62, 0.14);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background-color: var(--bg-cream);
+      color: var(--text-dark);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      overflow-x: hidden;
+      line-height: 1.6;
+      position: relative;
+      min-height: 100vh;
+      background-image: 
+        radial-gradient(circle at 10% 15%, rgba(234, 242, 232, 0.8) 0%, transparent 45%),
+        radial-gradient(circle at 90% 85%, rgba(250, 238, 233, 0.7) 0%, transparent 50%),
+        radial-gradient(circle at 50% 50%, rgba(249, 247, 242, 0.5) 0%, transparent 100%);
+      background-attachment: fixed;
+    }
+
+    /* Ambient Canvas (Floating Leaves & Petals & Fireflies) */
+    #nature-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 24px 20px 90px;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Music Player Pill */
+    .audio-pill {
+      position: fixed;
+      top: 18px;
+      right: 18px;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--border-subtle);
+      border-radius: 30px;
+      padding: 9px 18px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      box-shadow: 0 4px 20px rgba(45, 74, 62, 0.08);
+      transition: all 0.3s ease;
+      font-size: 0.84rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .audio-pill:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 24px rgba(45, 74, 62, 0.12);
+      color: var(--nature-forest);
+    }
+
+    .audio-pill.playing .leaf-disc {
+      animation: spinLeaf 3.5s linear infinite;
+    }
+
+    @keyframes spinLeaf {
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Hero Header */
+    header {
+      text-align: center;
+      padding: 55px 12px 35px;
+    }
+
+    .village-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 16px;
+      background: var(--nature-soft-green);
+      color: var(--nature-forest);
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.4px;
+      margin-bottom: 20px;
+      border: 1px solid rgba(107, 143, 113, 0.25);
+      animation: fadeInDown 1s ease;
+    }
+
+    h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.3rem, 7vw, 3.4rem);
+      font-weight: 600;
+      color: var(--nature-forest);
+      line-height: 1.15;
+      margin-bottom: 14px;
+      letter-spacing: -0.5px;
+    }
+
+    .hero-subtitle {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      max-width: 520px;
+      margin: 0 auto;
+      font-weight: 300;
+      line-height: 1.65;
+    }
+
+    /* Calming Village Grounding Card */
+    .breathe-card {
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--border-subtle);
+      border-radius: 22px;
+      padding: 24px;
+      text-align: center;
+      margin: 28px 0 38px;
+      box-shadow: var(--shadow-cozy);
+      position: relative;
+    }
+
+    .breathe-circle {
+      width: 72px;
+      height: 72px;
+      background: linear-gradient(135deg, #e3ede1, #fdece8);
+      border-radius: 50%;
+      margin: 0 auto 12px;
+      animation: pulseBreath 7s ease-in-out infinite;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      box-shadow: 0 0 25px rgba(107, 143, 113, 0.25);
+    }
+
+    @keyframes pulseBreath {
+      0%, 100% { transform: scale(0.92); opacity: 0.85; }
+      50% { transform: scale(1.22); opacity: 1; }
+    }
+
+    .breathe-text {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      font-style: italic;
+    }
+
+    /* Section Styling */
+    .cozy-card {
+      background: var(--bg-card);
+      border-radius: 26px;
+      padding: 30px 26px;
+      margin-bottom: 34px;
+      border: 1px solid var(--border-subtle);
+      box-shadow: var(--shadow-cozy);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.85rem;
+      font-weight: 600;
+      color: var(--nature-forest);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 6px;
+    }
+
+    .section-desc {
+      color: var(--text-muted);
+      font-size: 0.92rem;
+      margin-bottom: 22px;
+    }
+
+    /* =========================================================
+       Section: Village Greenery & Peaceful Scenery Walk
+       ========================================================= */
+    .village-scenery-box {
+      border-radius: 18px;
+      overflow: hidden;
+      position: relative;
+      height: 220px;
+      margin-bottom: 18px;
+      background: url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1000&q=80') center/cover no-repeat;
+      display: flex;
+      align-items: flex-end;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+    }
+
+    .village-scenery-overlay {
+      background: linear-gradient(to top, rgba(20, 36, 28, 0.85) 0%, rgba(20, 36, 28, 0.2) 65%, transparent 100%);
+      width: 100%;
+      padding: 22px 20px 18px;
+      color: #ffffff;
+    }
+
+    .village-scenery-overlay h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.45rem;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+    }
+
+    .village-scenery-overlay p {
+      font-size: 0.85rem;
+      opacity: 0.92;
+      font-weight: 300;
+    }
+
+    .village-features {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    @media (max-width: 520px) {
+      .village-features {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .village-chip {
+      background: #fbfbf9;
+      border: 1px solid rgba(107, 143, 113, 0.2);
+      border-radius: 14px;
+      padding: 12px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+
+    .village-chip:hover {
+      background: var(--nature-soft-green);
+      transform: translateY(-2px);
+      border-color: var(--nature-sage);
+    }
+
+    .village-chip .chip-icon {
+      font-size: 1.6rem;
+      margin-bottom: 4px;
+      display: block;
+    }
+
+    .village-chip .chip-title {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--nature-forest);
+    }
+
+    /* =========================================================
+       Section: Botanical Sanctuary & Houseplants
+       ========================================================= */
+    .plant-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    @media (max-width: 560px) {
+      .plant-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .plant-card {
+      background: #fafaf7;
+      border: 1px solid rgba(107, 143, 113, 0.18);
+      border-radius: 18px;
+      padding: 18px 12px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      user-select: none;
+      position: relative;
+    }
+
+    .plant-card:hover {
+      transform: translateY(-4px) scale(1.02);
+      box-shadow: 0 10px 25px rgba(107, 143, 113, 0.15);
+      border-color: var(--nature-sage);
+      background: #ffffff;
+    }
+
+    .plant-icon {
+      font-size: 2.2rem;
+      display: block;
+      margin-bottom: 6px;
+      transition: transform 0.35s ease;
+    }
+
+    .plant-card:hover .plant-icon {
+      transform: scale(1.15) rotate(-3deg);
+    }
+
+    .plant-name {
+      font-size: 0.84rem;
+      font-weight: 600;
+      color: var(--nature-forest);
+      display: block;
+    }
+
+    .plant-tag {
+      font-size: 0.72rem;
+      color: var(--nature-sage);
+      margin-top: 3px;
+      display: block;
+    }
+
+    /* =========================================================
+       Section: Warm Tea Station
+       ========================================================= */
+    .tea-selector {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 22px;
+    }
+
+    .tea-btn {
+      background: #faf7f5;
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      padding: 14px 10px;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.25s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .tea-btn:hover {
+      background: #f4eee9;
+      transform: translateY(-2px);
+    }
+
+    .tea-btn.active {
+      background: #fdf5f2;
+      border-color: var(--primary-rose);
+      box-shadow: 0 4px 15px rgba(214, 135, 132, 0.2);
+    }
+
+    .tea-btn .tea-icon {
+      font-size: 1.8rem;
+    }
+
+    .tea-btn .tea-name {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-dark);
+    }
+
+    .tea-display {
+      background: #fcfbf9;
+      border-radius: 18px;
+      padding: 26px 20px;
+      text-align: center;
+      min-height: 180px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      border: 1px dashed rgba(107, 143, 113, 0.3);
+    }
+
+    .cup-steaming {
+      position: relative;
+      font-size: 3rem;
+      margin-bottom: 10px;
+      animation: floatCup 3s ease-in-out infinite;
+    }
+
+    @keyframes floatCup {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+
+    .tea-quote {
+      font-family: 'Caveat', cursive;
+      font-size: 1.35rem;
+      color: #4a3c31;
+      line-height: 1.35;
+      max-width: 480px;
+      transition: opacity 0.3s ease;
+    }
+
+    .tea-note {
+      font-size: 0.84rem;
+      color: var(--text-muted);
+      margin-top: 8px;
+    }
+
+    /* =========================================================
+       Section: Blooming Bouquet
+       ========================================================= */
+    .flower-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .flower-item {
+      background: #fffdfb;
+      border: 1px solid rgba(214, 135, 132, 0.22);
+      border-radius: 16px;
+      padding: 16px 10px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      user-select: none;
+    }
+
+    .flower-item:hover {
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 8px 22px rgba(214, 135, 132, 0.16);
+      border-color: var(--primary-rose);
+      background: #ffffff;
+    }
+
+    .flower-emoji {
+      font-size: 2.1rem;
+      display: block;
+      margin-bottom: 6px;
+      transition: transform 0.4s ease;
+    }
+
+    .flower-item:hover .flower-emoji {
+      transform: scale(1.15) rotate(4deg);
+    }
+
+    .flower-label {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-dark);
+      display: block;
+    }
+
+    .flower-tap-hint {
+      font-size: 0.72rem;
+      color: var(--primary-rose);
+      margin-top: 3px;
+      display: block;
+    }
+
+    /* =========================================================
+       Section: Open When Envelopes
+       ========================================================= */
+    .envelope-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    @media (max-width: 500px) {
+      .envelope-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .envelope-card {
+      background: #fafaf7;
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      padding: 18px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .envelope-card:hover {
+      background: #ffffff;
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-hover);
+      border-color: var(--nature-sage);
+    }
+
+    .envelope-icon {
+      width: 44px;
+      height: 44px;
+      background: #fff;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.35rem;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.04);
+      flex-shrink: 0;
+    }
+
+    .envelope-info h4 {
+      font-size: 0.86rem;
+      color: var(--text-dark);
+      font-weight: 600;
+      line-height: 1.3;
+      margin-bottom: 2px;
+    }
+
+    .envelope-info span {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* =========================================================
+       Section: Polaroid Scrapbook
+       ========================================================= */
+    .polaroid-stack {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 8px;
+    }
+
+    .polaroid {
+      background: #ffffff;
+      padding: 12px 12px 18px 12px;
+      border-radius: 8px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.06);
+      border: 1px solid rgba(0,0,0,0.04);
+      transform: rotate(-1.5deg);
+      transition: all 0.3s ease;
+    }
+
+    .polaroid:nth-child(even) {
+      transform: rotate(1.8deg);
+    }
+
+    .polaroid:hover {
+      transform: rotate(0deg) scale(1.03);
+      box-shadow: 0 15px 35px rgba(0,0,0,0.12);
+      z-index: 5;
+    }
+
+    .polaroid-img {
+      width: 100%;
+      height: 145px;
+      background-size: cover;
+      background-position: center;
+      border-radius: 4px;
+      margin-bottom: 10px;
+    }
+
+    .polaroid-caption {
+      font-family: 'Caveat', cursive;
+      font-size: 1.15rem;
+      text-align: center;
+      color: #3b3530;
+      line-height: 1.25;
+    }
+
+    /* =========================================================
+       Section: Golden Hangout Date Pass
+       ========================================================= */
+    .coupon-card {
+      background: linear-gradient(135deg, #fdfbf7, #f4eee7);
+      border: 2px dashed var(--accent-honey);
+      border-radius: 22px;
+      padding: 28px 22px;
+      text-align: center;
+      position: relative;
+      box-shadow: 0 10px 30px rgba(223, 160, 78, 0.12);
+      margin-bottom: 30px;
+    }
+
+    .coupon-badge {
+      display: inline-block;
+      background: var(--accent-honey);
+      color: white;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 4px 14px;
+      border-radius: 20px;
+      margin-bottom: 12px;
+    }
+
+    .coupon-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.8rem;
+      color: #382c22;
+      margin-bottom: 8px;
+    }
+
+    .coupon-desc {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      max-width: 480px;
+      margin: 0 auto 18px;
+      line-height: 1.55;
+    }
+
+    .redeem-btn {
+      background: var(--nature-forest);
+      color: #fff;
+      border: none;
+      padding: 13px 30px;
+      border-radius: 30px;
+      font-size: 0.92rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 4px 15px rgba(45, 74, 62, 0.2);
+    }
+
+    .redeem-btn:hover {
+      background: var(--nature-sage);
+      transform: scale(1.03);
+    }
+
+    .redeem-btn.redeemed {
+      background: #73946a;
+      pointer-events: none;
+    }
+
+    /* Modal Sheet */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(22, 33, 26, 0.65);
+      backdrop-filter: blur(8px);
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+      opacity: 1;
+    }
+
+    .modal-sheet {
+      background: #fffdfb;
+      max-width: 490px;
+      width: 100%;
+      border-radius: 24px;
+      padding: 34px 28px;
+      position: relative;
+      box-shadow: 0 25px 60px rgba(0,0,0,0.25);
+      transform: translateY(20px) scale(0.96);
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      border: 1px solid rgba(107, 143, 113, 0.2);
+      max-height: 85vh;
+      overflow-y: auto;
+    }
+
+    .modal-overlay.active .modal-sheet {
+      transform: translateY(0) scale(1);
+    }
+
+    .close-modal {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      background: var(--nature-soft-green);
+      border: none;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--nature-forest);
+      font-size: 1.1rem;
+      transition: all 0.2s;
+    }
+
+    .close-modal:hover {
+      background: #dbe8d8;
+    }
+
+    .modal-tag {
+      color: var(--nature-sage);
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .modal-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.75rem;
+      color: var(--nature-forest);
+      margin-bottom: 16px;
+      line-height: 1.25;
+    }
+
+    .modal-body {
+      color: #423d38;
+      font-size: 0.95rem;
+      line-height: 1.75;
+      white-space: pre-line;
+    }
+
+    .signature-area {
+      font-family: 'Caveat', cursive;
+      font-size: 1.45rem;
+      color: var(--nature-forest);
+      margin-top: 22px;
+      text-align: right;
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px 10px 20px;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nature Canvas (Falling green leaves, blossoms, and warm fireflies) -->
+  <canvas id="nature-canvas"></canvas>
+
+  <!-- Audio Pill -->
+  <div class="audio-pill" id="audioToggle" onclick="toggleNatureAudio()">
+    <span class="leaf-disc">🍃</span>
+    <span id="audioStatus">Play Nature Ambience</span>
+  </div>
+
+  <div class="container">
+
+    <!-- Hero Header -->
+    <header>
+      <div class="village-badge">🌿 A Quiet Sanctuary of Greenery, Tea & Love</div>
+      <h1>Happy Birthday, My Gentle Soul</h1>
+      <p class="hero-subtitle">
+        I know the world can get loud and your tender heart feels every little wave so deeply. 
+        Here is your peaceful haven—filled with towering trees, fresh village breezes, hot tea, and eternal safety in my love.
+      </p>
+    </header>
+
+    <!-- Calming Grounding Box -->
+    <div class="breathe-card">
+      <div class="breathe-circle">
+        <span>🌱</span>
+      </div>
+      <p class="breathe-text">Breathe in the calm village air... Exhale every heavy thought. You are cherished beyond measure.</p>
+    </div>
+
+    <!-- Section: Village Greenery & Countryside Serenity -->
+    <section class="cozy-card">
+      <div class="section-title">
+        <span>🏡</span>
+        <h2>The Village Morning Walk</h2>
+      </div>
+      <p class="section-desc">Whenever your mind feels crowded, close your eyes and come here with me:</p>
+
+      <div class="village-scenery-box">
+        <div class="village-scenery-overlay">
+          <h3>Emerald Pathways & Whispering Trees</h3>
+          <p>Where the air smells like fresh rain on leaves and there are no worries in sight.</p>
+        </div>
+      </div>
+
+      <div class="village-features">
+        <div class="village-chip" onclick="openVillageMoment('trees')">
+          <span class="chip-icon">🌳</span>
+          <span class="chip-title">The Big Banyan Tree</span>
+        </div>
+        <div class="village-chip" onclick="openVillageMoment('breeze')">
+          <span class="chip-icon">🌾</span>
+          <span class="chip-title">The Grassy Fields</span>
+        </div>
+        <div class="village-chip" onclick="openVillageMoment('rain')">
+          <span class="chip-icon">🌧️</span>
+          <span class="chip-title">Petrichor & Rain</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section: Botanical & Houseplant Sanctuary -->
+    <section class="cozy-card">
+      <div class="section-title">
+        <span>🪴</span>
+        <h2>Our Plant Sanctuary</h2>
+      </div>
+      <p class="section-desc">Like your favorite plants, you grow with gentle sunlight, patience, and love. Tap each plant to care for it:</p>
+
+      <div class="plant-grid">
+        <div class="plant-card" onclick="waterPlant(this, 'Monstera Deliciosa', 'Its leaves split naturally to let the sunlight pass through. Remember: your gentle vulnerabilities are not flaws—they are where the light enters.')">
+          <span class="plant-icon">🌿</span>
+          <span class="plant-name">Monstera</span>
+          <span class="plant-tag">Tap to nurture</span>
+        </div>
+        <div class="plant-card" onclick="waterPlant(this, 'Ancient Oak Tree', 'Its roots run deep and hold firm against the fiercest storms. Whenever life shakes you, lean on me. I will always be your solid ground.')">
+          <span class="plant-icon">🌲</span>
+          <span class="plant-name">Forest Oak</span>
+          <span class="plant-tag">Tap to nurture</span>
+        </div>
+        <div class="plant-card" onclick="waterPlant(this, 'Potted Peace Lily', 'A quiet, elegant bloom that thrives in gentle shade. You don\'t have to be loud to be extraordinary. Your soft presence brings peace everywhere.')">
+          <span class="plant-icon">🌱</span>
+          <span class="plant-name">Peace Lily</span>
+          <span class="plant-tag">Tap to nurture</span>
+        </div>
+        <div class="plant-card" onclick="waterPlant(this, 'Wild Forest Fern', 'Ferns drink the morning dew and grow at their own quiet rhythm. Never rush yourself. You are doing so much better than your overthinking tells you.')">
+          <span class="plant-icon">🪴</span>
+          <span class="plant-name">Forest Fern</span>
+          <span class="plant-tag">Tap to nurture</span>
+        </div>
+        <div class="plant-card" onclick="waterPlant(this, 'Village Bamboo Grove', 'Bends gracefully with the wind without ever breaking. You are far stronger and more resilient than you realize.')">
+          <span class="plant-icon">🎋</span>
+          <span class="plant-name">Green Bamboo</span>
+          <span class="plant-tag">Tap to nurture</span>
+        </div>
+        <div class="plant-card" onclick="waterPlant(this, 'Flowering Jasmine Vine', 'Its scent fills the entire night air. Just like your laughter, it makes the simplest room feel like paradise.')">
+          <span class="plant-icon">🌸</span>
+          <span class="plant-name">Jasmine Vine</span>
+          <span class="plant-tag">Tap to nurture</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section: Warm Tea Station -->
+    <section class="cozy-card">
+      <div class="section-title">
+        <span>🍵</span>
+        <h2>A Cup of Comfort</h2>
+      </div>
+      <p class="section-desc">Freshly brewed for whatever your heart needs today:</p>
+
+      <div class="tea-selector">
+        <div class="tea-btn active" onclick="selectTea(0)">
+          <span class="tea-icon">🌿</span>
+          <span class="tea-name">Village Green</span>
+        </div>
+        <div class="tea-btn" onclick="selectTea(1)">
+          <span class="tea-icon">🍯</span>
+          <span class="tea-name">Chamomile Honey</span>
+        </div>
+        <div class="tea-btn" onclick="selectTea(2)">
+          <span class="tea-icon">🫖</span>
+          <span class="tea-name">Matcha Blossom</span>
+        </div>
+      </div>
+
+      <div class="tea-display" id="teaDisplay">
+        <div class="cup-steaming">☕</div>
+        <div class="tea-quote" id="teaQuote">"When your thoughts are spinning, remember you don't have to figure out everything today. Right here, in this moment, you are safe and doing wonderfully."</div>
+        <div class="tea-note" id="teaNote">Brewed fresh with wild mint & countryside serenity 🌿</div>
+      </div>
+    </section>
+
+    <!-- Section: Blooming Flowers -->
+    <section class="cozy-card">
+      <div class="section-title">
+        <span>🌷</span>
+        <h2>The Wildflower Meadow</h2>
+      </div>
+      <p class="section-desc">Pick a flower from the meadow to read its secret message:</p>
+
+      <div class="flower-grid">
+        <div class="flower-item" onclick="bloomFlower(this, 'You are never a burden to me. Your worries, your silence, and your delicate heart will always have a safe home with me.')">
+          <span class="flower-emoji">🌸</span>
+          <span class="flower-label">Peony</span>
+          <span class="flower-tap-hint">Tap to bloom</span>
+        </div>
+        <div class="flower-item" onclick="bloomFlower(this, 'You don\'t have to be perfect to be loved. I cherish the quiet you, the goofy you, and everything in between.')">
+          <span class="flower-emoji">🌷</span>
+          <span class="flower-label">Tulip</span>
+          <span class="flower-tap-hint">Tap to bloom</span>
+        </div>
+        <div class="flower-item" onclick="bloomFlower(this, 'Your tenderness is not a flaw. In a harsh world, having a soft heart is the bravest, sweetest thing.')">
+          <span class="flower-emoji">🌼</span>
+          <span class="flower-label">Daisy</span>
+          <span class="flower-tap-hint">Tap to bloom</span>
+        </div>
+        <div class="flower-item" onclick="bloomFlower(this, 'Whenever your overthinking whispers doubt—look into my eyes. You are the center of my world.')">
+          <span class="flower-emoji">🌻</span>
+          <span class="flower-label">Sunflower</span>
+          <span class="flower-tap-hint">Tap to bloom</span>
+        </div>
+        <div class="flower-item" onclick="bloomFlower(this, 'No mistake or insecurity could ever push me away. I am holding your hand for the long run.')">
+          <span class="flower-emoji">🌺</span>
+          <span class="flower-label">Lily</span>
+          <span class="flower-tap-hint">Tap to bloom</span>
+        </div>
+        <div class="flower-item" onclick="bloomFlower(this, 'You make my life so colorful and peaceful. Happy Birthday, my irreplaceable one.')">
+          <span class="flower-emoji">🌹</span>
+          <span class="flower-label">Sweet Rose</span>
+          <span class="flower-tap-hint">Tap to bloom</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section: Open When Letters -->
+    <section class="cozy-card">
+      <div class="section-title">
+        <span>💌</span>
+        <h2>Letters For Your Heart</h2>
+      </div>
+      <p class="section-desc">Whenever your mind gets loud, open the envelope you need most:</p>
+
+      <div class="envelope-grid">
+        <div class="envelope-card" onclick="openLetter('birthday')">
+          <div class="envelope-icon">🎂</div>
+          <div class="envelope-info">
+            <h4>Open On Your Birthday</h4>
+            <span>A midnight love letter</span>
+          </div>
+        </div>
+
+        <div class="envelope-card" onclick="openLetter('overthinking')">
+          <div class="envelope-icon">💭</div>
+          <div class="envelope-info">
+            <h4>When You Overthink</h4>
+            <span>To silence the noisy thoughts</span>
+          </div>
+        </div>
+
+        <div class="envelope-card" onclick="openLetter('hurt')">
+          <div class="envelope-icon">🩹</div>
+          <div class="envelope-info">
+            <h4>When You Feel Hurt</h4>
+            <span>A gentle reminder of your worth</span>
+          </div>
+        </div>
+
+        <div class="envelope-card" onclick="openLetter('hangout')">
+          <div class="envelope-icon">🌾</div>
+          <div class="envelope-info">
+            <h4>When You Miss Us</h4>
+            <span>Our little cozy universe</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section: Polaroid Memories -->
+    <section class="cozy-card">
+      <div class="section-title">
+        <span>📸</span>
+        <h2>Moments I Keep In My Heart</h2>
+      </div>
+      <p class="section-desc">Our peaceful hangouts, quiet laughs, and shared silence:</p>
+
+      <div class="polaroid-stack">
+        <div class="polaroid">
+          <div class="polaroid-img" style="background-image: url('https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=600&q=80');"></div>
+          <div class="polaroid-caption">Sipping hot tea & watching the rain</div>
+        </div>
+        <div class="polaroid">
+          <div class="polaroid-img" style="background-image: url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=600&q=80');"></div>
+          <div class="polaroid-caption">Walking down green village paths with you</div>
+        </div>
+        <div class="polaroid">
+          <div class="polaroid-img" style="background-image: url('https://images.unsplash.com/photo-1518895949257-7621c3c786d7?auto=format&fit=crop&w=600&q=80');"></div>
+          <div class="polaroid-caption">Looking at flowers & plant shops together</div>
+        </div>
+        <div class="polaroid">
+          <div class="polaroid-img" style="background-image: url('https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=600&q=80');"></div>
+          <div class="polaroid-caption">Just sitting close in comfortable silence</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section: Golden Date Coupon -->
+    <div class="coupon-card">
+      <span class="coupon-badge">Special Birthday Pass</span>
+      <h3 class="coupon-title">One Greenery & Tea Escape Date</h3>
+      <p class="coupon-desc">
+        Good for: A peaceful day out in the greenery, plant shopping, drinking hot tea under leafy trees, zero rush, no overthinking, and endless warm hugs.
+      </p>
+      <button class="redeem-btn" id="redeemBtn" onclick="redeemCoupon()">
+        <span>🎫</span>
+        <span id="couponText">Redeem Your Date</span>
+      </button>
+    </div>
+
+    <footer>
+      Crafted with endless care for someone truly irreplaceable. Happy Birthday! 🌿🤍
+    </footer>
+
+  </div>
+
+  <!-- Interactive Modal Letter Popup -->
+  <div class="modal-overlay" id="letterModal" onclick="closeModalOnBackdrop(event)">
+    <div class="modal-sheet">
+      <button class="close-modal" onclick="closeModal()">✕</button>
+      <div class="modal-tag" id="modalTag">Letter</div>
+      <h3 class="modal-title" id="modalTitle">Letter Title</h3>
+      <div class="modal-body" id="modalBody"></div>
+      <div class="signature-area">With all my love,<br>Forever Your Safe Place 🤍🌿</div>
+    </div>
+  </div>
+
+  <script>
+    /* ==========================================================================
+       1. Nature Canvas: Falling Green Leaves, Pink Petals & Glowing Fireflies
+       ========================================================================== */
+    const canvas = document.getElementById('nature-canvas');
+    const ctx = canvas.getContext('2d');
+    let width = canvas.width = window.innerWidth;
+    let height = canvas.height = window.innerHeight;
+
+    window.addEventListener('resize', () => {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    });
+
+    const particles = [];
+    const particleCount = 34;
+
+    for (let i = 0; i < particleCount; i++) {
+      const isLeaf = Math.random() > 0.45;
+      particles.push({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        size: Math.random() * 9 + 6,
+        speedX: Math.random() * 1.2 - 0.6,
+        speedY: Math.random() * 0.9 + 0.4,
+        angle: Math.random() * 360,
+        spin: Math.random() * 0.02 - 0.01,
+        isLeaf: isLeaf,
+        color: isLeaf 
+          ? ['rgba(107, 143, 113, 0.45)', 'rgba(143, 174, 137, 0.4)', 'rgba(78, 115, 85, 0.35)'][Math.floor(Math.random() * 3)]
+          : ['rgba(247, 198, 196, 0.45)', 'rgba(235, 178, 175, 0.4)', 'rgba(255, 230, 220, 0.5)'][Math.floor(Math.random() * 3)]
+      });
+    }
+
+    function renderNature() {
+      ctx.clearRect(0, 0, width, height);
+
+      particles.forEach(p => {
+        p.x += p.speedX;
+        p.y += p.speedY;
+        p.angle += p.spin;
+
+        if (p.y > height) {
+          p.y = -12;
+          p.x = Math.random() * width;
+        }
+        if (p.x > width) p.x = 0;
+        if (p.x < 0) p.x = width;
+
+        ctx.save();
+        ctx.translate(p.x, p.y);
+        ctx.rotate(p.angle);
+        ctx.fillStyle = p.color;
+
+        ctx.beginPath();
+        if (p.isLeaf) {
+          // Draw leaf shape
+          ctx.moveTo(0, -p.size);
+          ctx.quadraticCurveTo(p.size * 0.7, 0, 0, p.size);
+          ctx.quadraticCurveTo(-p.size * 0.7, 0, 0, -p.size);
+        } else {
+          // Draw flower petal
+          ctx.ellipse(0, 0, p.size, p.size * 0.55, 0, 0, Math.PI * 2);
+        }
+        ctx.fill();
+        ctx.restore();
+      });
+
+      requestAnimationFrame(renderNature);
+    }
+    renderNature();
+
+    /* ==========================================================================
+       2. Village Scenery Moments
+       ========================================================================== */
+    const villageMoments = {
+      trees: {
+        tag: "Village Greenery Sanctuary",
+        title: "Under The Canopy of Ancient Trees",
+        content: `Close your eyes for a moment.
+
+Imagine us standing beneath a giant banyan tree in a green village. The sun is filtering through thousands of emerald leaves, casting soft warm shadows on the ground.
+
+The wind rustles through the branches with a steady, soothing whisper. There are no deadlines, no expectations, and no loud voices. Just cool shade, the smell of earth and leaves, and my arm around your shoulder.
+
+Whenever your thoughts feel overwhelming, remember this place. It lives in us.`
+      },
+      breeze: {
+        tag: "Countryside Serenity",
+        title: "The Breeze Over Green Fields",
+        content: `You know that feeling when you look out over endless green fields, and a gentle wind brushes across your face?
+
+It carries away the heaviness. That is what being with you feels like to me. In a busy, complicated world, you are my wide-open green field—calm, peaceful, and pure.`
+      },
+      rain: {
+        tag: "Petrichor & Fresh Leaves",
+        title: "Rain on Village Leaves",
+        content: `Think of that clean, rich scent when the first raindrops hit dry village earth and green leaves.
+
+Rain doesn't come to hurt the plants; it comes to wash them clean and help them grow. Your tears and your tender feelings are the exact same. Never apologize for crying or feeling hurt. I will always be right beside you to shelter you with warm tea and love.`
+      }
+    };
+
+    function openVillageMoment(key) {
+      const data = villageMoments[key];
+      openModal(data.tag, data.title, data.content);
+    }
+
+    /* ==========================================================================
+       3. Houseplant Care Interaction
+       ========================================================================== */
+    function waterPlant(el, plantName, message) {
+      el.style.transform = 'scale(1.08)';
+      setTimeout(() => el.style.transform = '', 300);
+      openModal("Nurtured with Love 🪴", plantName, message);
+    }
+
+    /* ==========================================================================
+       4. Tea Station
+       ========================================================================== */
+    const teas = [
+      {
+        quote: '"When your thoughts are spinning, remember you don\'t have to figure out everything today. Right here, in this moment, you are safe and doing wonderfully."',
+        note: 'Brewed fresh with wild mint & countryside serenity 🌿',
+        cup: '🌿'
+      },
+      {
+        quote: '"Take a deep breath and let your shoulders drop. You are surrounded by grace and love. Nothing can steal the gentleness of your spirit."',
+        note: 'Brewed with lavender blossoms & sweet honey 🍯',
+        cup: '🫖'
+      },
+      {
+        quote: '"Every laugh we share, every quiet tea shop we sit in, and every walk holding hands—those are my favorite places in this whole world."',
+        note: 'Infused with peach sweetness & warm memories 🌸',
+        cup: '🍵'
+      }
+    ];
+
+    function selectTea(index) {
+      document.querySelectorAll('.tea-btn').forEach((btn, idx) => {
+        btn.classList.toggle('active', idx === index);
+      });
+      const quoteEl = document.getElementById('teaQuote');
+      const noteEl = document.getElementById('teaNote');
+      
+      quoteEl.style.opacity = '0';
+      setTimeout(() => {
+        quoteEl.innerText = teas[index].quote;
+        noteEl.innerText = teas[index].note;
+        quoteEl.style.opacity = '1';
+      }, 200);
+    }
+
+    /* ==========================================================================
+       5. Blooming Bouquet Logic
+       ========================================================================== */
+    function bloomFlower(el, message) {
+      const tag = el.querySelector('.flower-label').innerText;
+      openModal("A Whisper For You 🌸", tag, message);
+    }
+
+    /* ==========================================================================
+       6. Letter Modal System
+       ========================================================================== */
+    const letters = {
+      birthday: {
+        tag: "Midnight Birthday Letter",
+        title: "Happy Birthday, My Soft-Hearted Soul",
+        content: `Today is the day the world was blessed with the gentlest, kindest person I know.
+
+I see how deeply you care, how much you think about everything, and how tender your heart is. In a world that is often loud, rushed, and careless, your softness is a rare and precious light.
+
+I don't just love you on your easy, happy days. I love you when your mind overthinks. I love you when you feel overwhelmed or insecure. You never have to put on a brave face around me—you can simply be yourself, rest your head on my shoulder, and let me protect your peace.
+
+Happy birthday, my favorite person. Here's to more tea dates, village walks under green trees, and a lifetime of making you smile.`
+      },
+      overthinking: {
+        tag: "Emergency Comfort Note",
+        title: "When The Thoughts Get Loud",
+        content: `Hey, pause for just ten seconds. Take a long, slow breath with me.
+
+Your brain is probably running through a thousand "what ifs" right now. It is analyzing words, scenarios, and things that might never happen.
+
+I want you to know:
+1. You did not do anything wrong.
+2. I am not mad, tired, or disappointed in you.
+3. You are deeply loved, right this second, exactly as you are.
+
+You don't need to overthink whether you are enough. To me, you are everything.`
+      },
+      hurt: {
+        tag: "Healing & Reassurance",
+        title: "When Your Feelings Get Bruised",
+        content: `Because you feel things so deeply, the world can sometimes hurt you more easily than others.
+
+Never let anyone make you feel bad for having a soft heart. Being sensitive means you love deeper, notice the beauty others walk past, and care with sincerity.
+
+Whenever someone's words or actions make you feel small, remember who you are to me. Come to me, hold my hand, and let me remind you how cherished you are.`
+      },
+      hangout: {
+        tag: "Our Favorite Moments",
+        title: "Just Sitting Next To You",
+        content: `My favorite memories with you aren't big fancy events.
+
+They are the quietest hours—sipping tea across from you, walking slowly while you point at pretty green trees and flowers, hearing your soft laugh, and just being in the same room without needing to say a word.
+
+Any place becomes warm and comfortable when you are there with me.`
+      }
+    };
+
+    function openLetter(key) {
+      const data = letters[key];
+      openModal(data.tag, data.title, data.content);
+    }
+
+    function openModal(tag, title, content) {
+      document.getElementById('modalTag').innerText = tag;
+      document.getElementById('modalTitle').innerText = title;
+      document.getElementById('modalBody').innerText = content;
+      document.getElementById('letterModal').classList.add('active');
+    }
+
+    function closeModal() {
+      document.getElementById('letterModal').classList.remove('active');
+    }
+
+    function closeModalOnBackdrop(e) {
+      if (e.target.id === 'letterModal') {
+        closeModal();
+      }
+    }
+
+    /* ==========================================================================
+       7. Golden Hangout Ticket Interaction
+       ========================================================================== */
+    function redeemCoupon() {
+      const btn = document.getElementById('redeemBtn');
+      const text = document.getElementById('couponText');
+      btn.classList.add('redeemed');
+      text.innerText = "Reserved! Date Claimed 🌿";
+      
+      openModal(
+        "Date Confirmed 🤍",
+        "It's Official!",
+        "Your green countryside escape & tea date is officially reserved. Trees, hot tea, plant shopping, and quality time with the person who loves you most. Happy Birthday!"
+      );
+    }
+
+    /* ==========================================================================
+       8. Nature Audio Synthesis (Gentle Acoustic Chords & Wind Chime Tones)
+       ========================================================================== */
+    let audioCtx = null;
+    let isPlaying = false;
+    let musicInterval = null;
+
+    const chords = [
+      [261.63, 329.63, 392.00, 523.25], // C Major
+      [220.00, 261.63, 329.63, 440.00], // A Minor
+      [174.61, 220.00, 261.63, 349.23], // F Major
+      [196.00, 246.94, 293.66, 392.00]  // G Major
+    ];
+    let chordIdx = 0;
+
+    function playNatureChord() {
+      if (!audioCtx || !isPlaying) return;
+      const notes = chords[chordIdx];
+      chordIdx = (chordIdx + 1) % chords.length;
+
+      notes.forEach((freq, i) => {
+        setTimeout(() => {
+          if (!isPlaying) return;
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+
+          gain.gain.setValueAtTime(0.001, audioCtx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.035, audioCtx.currentTime + 1.2);
+          gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 4.5);
+
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+
+          osc.start();
+          osc.stop(audioCtx.currentTime + 4.8);
+        }, i * 260);
+      });
+    }
+
+    function toggleNatureAudio() {
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+
+      const pill = document.getElementById('audioToggle');
+      const status = document.getElementById('audioStatus');
+
+      if (!isPlaying) {
+        if (audioCtx.state === 'suspended') {
+          audioCtx.resume();
+        }
+        isPlaying = true;
+        pill.classList.add('playing');
+        status.innerText = "Ambience Playing 🎶";
+        playNatureChord();
+        musicInterval = setInterval(playNatureChord, 5200);
+      } else {
+        isPlaying = false;
+        pill.classList.remove('playing');
+        status.innerText = "Play Nature Ambience";
+        clearInterval(musicInterval);
+      }
+    }
+  </script>
+</body>
+</html>
